@@ -1,16 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/home";
 import Questions from "./pages/questions";
-import GlobalStyle from "./globalStyle";
 
 const App = () => {
   return (
-    <GlobalStyle>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/questions/:questionId" element={<Questions />} />
-        </Routes>
-      </BrowserRouter>
-    </GlobalStyle>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/questions/:questionId" element={<Questions />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
