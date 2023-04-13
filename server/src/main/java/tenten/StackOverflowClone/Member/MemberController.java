@@ -1,11 +1,13 @@
 package tenten.StackOverflowClone.Member;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MemberController {
-    public static void main(String[] args) {
-        System.out.println("hello world");
+    @GetMapping("/")
+    public String helloWorld() {
+        return "Hello World!";
     }
 
 }
