@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import TemporaryLeftSideBar from "../components/common/TemporaryLeftSideBar";
-import QuestionContent from "../components/questions/questionContent";
-import QuestionHeader from "../components/questions/questionHeader";
+import QuestionContent from "../components/questions/QuestionContent";
+import QuestionHeader from "../components/questions/QuestionHeader";
 
 const Questions = () => {
   return (
