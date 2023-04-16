@@ -6,6 +6,7 @@ import TemporaryLeftSideBar from "../components/common/TemporaryLeftSideBar";
 import QuestionContent from "../components/questions/QuestionContent";
 import QuestionAnswer from "../components/questions/QuestionAnswer";
 import QuestionHeader from "../components/questions/QuestionHeader";
+import QuestionAnswerInput from "../components/questions/QuestionAnswerInput";
 
 const Questions = () => {
   const [question, setQuestion] = useState(null);
@@ -15,7 +16,6 @@ const Questions = () => {
     const fetchData = async () => {
       const data = await getQuestion(questionId);
       setQuestion(data);
-      console.log(data);
     };
     fetchData();
   }, [questionId]);
@@ -45,6 +45,7 @@ const Questions = () => {
         </QuestionHeaderDate>
         <QuestionContent content={question.content} />
         <QuestionAnswer answers={question.answers}/>
+        <QuestionAnswerInput/>
       </QuestionContainer>
     </MainContainer>
   );

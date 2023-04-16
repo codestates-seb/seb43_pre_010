@@ -12,11 +12,11 @@ const QuestionContent = ({ content }) => {
         </div>
         <div>
           <p>{content}</p>
-          <div className="flex flex-row justify-between pt-20">
+          <div className="flex flex-row justify-between pt-10">
             <a className="text-slate-700">edit</a>
             <div className="flex flex-row items-center w-48 h-11 bg-sky-100 rounded-sm mt-1 mb-1 px-1.5">
               <div className="w-8 h-8 bg-lime-700 text-white text-center p-1 rounded-sm">H</div>
-              <a className="pl-2">User</a>
+              <div className="pl-2">User</div>
             </div>
           </div>
         </div>
