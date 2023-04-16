@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getQuestion } from "../api/api";
 import TemporaryLeftSideBar from "../components/common/TemporaryLeftSideBar";
 import QuestionContent from "../components/questions/QuestionContent";
+import QuestionAnswer from "../components/questions/QuestionAnswer";
 import QuestionHeader from "../components/questions/QuestionHeader";
 
 const Questions = () => {
@@ -42,7 +43,8 @@ const Questions = () => {
             <span className="text-sm">2 times</span>
           </div>
         </QuestionHeaderDate>
-        <QuestionContent content={question.content} answers={question.answers} />
+        <QuestionContent content={question.content} />
+        <QuestionAnswer answers={question.answers}/>
       </QuestionContainer>
     </MainContainer>
   );
