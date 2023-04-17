@@ -1,19 +1,19 @@
-import styled from "styled-components";
-import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor } from '@toast-ui/react-editor';
+import { useState } from 'react';
+import MDEditor from '@uiw/react-md-editor';
+import styled from 'styled-components';
 
 // 새로고침시 UI가 정상적으로 표시되지 않는 문제 발생 중...
 const QuestionAnswerInput = () => {
-    return (
-        <>
-            <div className="text-xl font-medium py-6">Your Answer</div>
-            <Editor
-            height="300px"
-            />
-            <SubmitButton>Post Your Answer</SubmitButton>
-        </>
-
-    )
+  const [value, setValue] = useState('');
+  return (
+    <>
+      <div className="text-xl font-medium py-6">Your Answer</div>
+      <div data-color-mode="light">
+        <MDEditor height={300} preview="edit" value={value} onChange={setValue} />
+      </div>
+      <SubmitButton>Post Your Answer</SubmitButton>
+    </>
+  );
 };
 
 const SubmitButton = styled.button`
