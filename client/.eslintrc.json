@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+
+  "extends": ["airbnb", "airbnb/hooks", "plugin:import/errors", "plugin:import/warnings", "prettier"],
+  "rules": {
+    "react/prop-types": 0,
+    "no-extra-semi": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [1, { "extensions": ["js", "jsx"] }],
+    "arrow-parens": ["warn", "always"],
+    "no-unused-vars": ["off"],
+    "no-console": ["off"],
+    "import/prefer-default-export": ["off"],
+    "react-hooks/exhaustive-deps": ["warn"],
+    "react/jsx-props-no-spreading": [1, { "custom": "ignore" }],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/no-array-index-key": "off"
+  }
+}
