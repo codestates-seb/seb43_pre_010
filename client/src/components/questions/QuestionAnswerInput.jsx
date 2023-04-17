@@ -2,7 +2,6 @@ import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import styled from 'styled-components';
 
-// 새로고침시 UI가 정상적으로 표시되지 않는 문제 발생 중...
 const QuestionAnswerInput = () => {
   const [value, setValue] = useState('');
   return (
