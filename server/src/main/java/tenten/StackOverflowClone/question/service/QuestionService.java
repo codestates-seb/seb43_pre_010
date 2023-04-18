@@ -19,11 +19,11 @@ import java.util.Optional;
 @Transactional
 public class QuestionService {
     private final QuestionRepository repository;
-    private final UserService userService;
+//    private final UserService userService;
 
-    public QuestionService(QuestionRepository repository, UserService userService) {
+    public QuestionService(QuestionRepository repository) {//, UserService userService) {
         this.repository = repository;
-        this.userService = userService;
+//        this.userService = userService;
     }
 
     public Question createQuestion(Question question) {
@@ -90,9 +90,9 @@ public class QuestionService {
 
     // 질문 작성 시 검증 -> 질문한 사용자가 존재하는지 확인
     private void verifyQuestionPost(Question question) {
-        User user = userService.findVerifiedUser(question.getUser().getUserId());
-
-        question.setUser(user);
+//        User user = userService.findVerifiedUser(question.getUser().getUserId());
+//
+//        question.setUser(user);
     }
 
     // 질문 객체를 DB에 저장하는 메서드
@@ -110,15 +110,15 @@ public class QuestionService {
 
     private void checkUpdatePossibility(Question changedQuestion, Question originalQuestion) {
         // 1. 회원이 수정하려는 건지 확인 -> getEmail()에서 NPE를 막기 위함
-        User verifiedUser = userService.findVerifiedUser(changedQuestion.getUser().getUserId());
-        changedQuestion.setUser(verifiedUser);
-
-        // 2. 질문을 등록한 사용자가 or 관리자가 수정하는게 맞는지 확인
-        if (changedQuestion.getUser().getUserId() != originalQuestion.getUser().getUserId()) {
-            if (!((changedQuestion.getUser().getEmail()).equals("admin@gmail.com"))) {
-                throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
-            }
-        }
+//        User verifiedUser = userService.findVerifiedUser(changedQuestion.getUser().getUserId());
+//        changedQuestion.setUser(verifiedUser);
+//
+//        // 2. 질문을 등록한 사용자가 or 관리자가 수정하는게 맞는지 확인
+//        if (changedQuestion.getUser().getUserId() != originalQuestion.getUser().getUserId()) {
+//            if (!((changedQuestion.getUser().getEmail()).equals("admin@gmail.com"))) {
+//                throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
+//            }
+//        }
 
         // 2. 질문이 삭제 상태인지 확인
         if (changedQuestion.getQuestionStatus() == Question.QuestionStatus.QUESTION_DELETE) {
