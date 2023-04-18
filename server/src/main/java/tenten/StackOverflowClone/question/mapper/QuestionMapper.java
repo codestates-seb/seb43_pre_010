@@ -15,7 +15,7 @@ public interface QuestionMapper {
     default Question questionPostDtoToQuestion(QuestionDto.Post post) {
         Question question = new Question();
         User user = new User();
-        user.setUserId(post.getUserId());
+//        user.setUserId(post.getUserId());
 
         question.setUser(user);
         question.setTitle(post.getTitle());
@@ -27,7 +27,7 @@ public interface QuestionMapper {
     default Question questionPatchDtoToQuestion(QuestionDto.Patch patch) {
         Question question = new Question();
         User user = new User();
-        user.setUserId(patch.getUserId());
+//        user.setUserId(patch.getUserId());
 
         question.setUser(user);
         question.setQuestionId(patch.getQuestionId());
@@ -37,10 +37,10 @@ public interface QuestionMapper {
         return question;
     }
 
-    @Mapping(source = "user", target = "userId")
+//    @Mapping(source = "user", target = "userId")
     QuestionDto.QuestionPatchResponse questionToQuestionPatchResponseDto(Question question);
 
-    @Mapping(source = "user", target = "userId")
+//    @Mapping(source = "user", target = "userId")
     QuestionDto.QuestionResponse questionToQuestionResponseDto(Question question);
 
     default List<QuestionDto.QuestionResponse> questionsToQuestionResponseDtos(List<Question> questions) {
