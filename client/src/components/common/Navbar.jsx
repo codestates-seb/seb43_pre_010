@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import Button from "./Button";
+import MenuButton from "./header/MenuButton";
 import { AchievementsSvg, CommunitySvg, GlassesSvg, HelpSvg, MailSvg, MessageSvg, SOIconSvg, SOLogoSvg } from "../../assets/Header/HeaderSVG";
 import SearchModal from "./header/SearchModal";
 
@@ -18,11 +19,9 @@ const Navbar = () => {
   }
 
   return (
-    <NavbarWrapper isSelected={isSelected}>
+    <NavbarWrapper>
       <div className="navbar">
-        <div className="menu-btn" onClick={handleMenuBtnClick}>
-          <span />
-        </div>
+        <MenuButton onClick={handleMenuBtnClick} isSelected={isSelected} />
         <Link to='/' className="nav-items nav-logo">
           <HeaberLogo/>
         </Link>
@@ -172,63 +171,5 @@ const NavbarWrapper = styled.nav`
 
   .sign-btn:hover {
     background-color: hsl(206, 100%, 40%);
-  }
-
-  .menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    width: 48px;
-    height: 47px;
-
-    > span {
-      display: inline-block;
-      height: 2px;
-      width: 16px;
-      margin: 3px 16px;
-      position: relative;
-      top: 0;
-      background-color: ${({ isSelected }) => isSelected ? "transparent" : "hsl(210, 8%, 35%)" };
-
-    }
-
-    span:before {
-      position: absolute;
-      content: '';
-      left: 0;
-      top: -5px;
-      transition: top, transform;
-      transition-duration: .1s;
-      transition-timing-function: ease-in-out;
-      display: inline-block;
-      height: 2px;
-      width: 16px;
-      background-color: hsl(210, 8%, 35%);
-      transform: ${({ isSelected }) => isSelected ? "rotate(-45deg)" : "none" };
-      top: ${({ isSelected }) => isSelected ? "0px" : "-5px" };
-
-    }
-
-    span:after {
-      position: absolute;
-      content: '';
-      left: 0;
-      top: -10px;
-      transition: top, transform;
-      transition-duration: .1s;
-      transition-timing-function: ease-in-out;
-      display: inline-block;
-      height: 2px;
-      width: 16px;
-      background-color: hsl(210, 8%, 35%);
-      transform: ${({ isSelected }) => isSelected ? "rotate(45deg)" : "none" };
-      top: ${({ isSelected }) => isSelected ? "0px" : "5px" };
-    }
-  }
-
-  .menu-btn:hover {
-    background-color: rgb(226, 226, 226);
   }
 `;
