@@ -13,7 +13,7 @@ const LeftNav = () => {
         </li>
         <li className="flex align-center">
           <IoEarthSharp className="flex m-2" />
-          <a href="/questions" className="m-1">
+          <a href="/questions" className="text-sm m-1 text-zinc-700">
             Questions
           </a>
         </li>
