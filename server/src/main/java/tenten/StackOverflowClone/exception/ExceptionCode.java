@@ -10,11 +10,14 @@ public enum ExceptionCode {
       - 500 Internal Server Error, 502 Bad Gateway
     */
 
-    MEMBER_NOT_FOUND(404, "Member not found"),
-    MEMBER_EXIST(409, "Member exist"),
+    USER_NOT_FOUND(404, "User not found"),
+    USER_EXIST(409, "User exist"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(403, "Question can not change"),
-    CANNOT_READ_QUESTION(403, "Question can not read");
+    CANNOT_READ_QUESTION(403, "Question can not read"),
+    CANNOT_DELETE_QUESTION(403, "Question can not delete"),
+    ALREADY_DELETED_QUESTION(410, "Question is already deleted"),
+    NOT_IMPLEMENTATION(501, "Not Implementation");
 
     @Getter
     private int status;
