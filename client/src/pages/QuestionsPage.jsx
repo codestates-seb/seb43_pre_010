@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuestion } from "../api/api";
-import TemporaryLeftSideBar from "../components/common/TemporaryLeftSideBar";
 import QuestionContent from "../components/questions/QuestionContent";
 import QuestionAnswer from "../components/questions/QuestionAnswer";
 import QuestionHeader from "../components/questions/QuestionHeader";
@@ -26,7 +25,6 @@ const Questions = () => {
   }
   return (
     <MainContainer>
-      <TemporaryLeftSideBar />
       <QuestionContainer>
         <QuestionHeader title={question.title} />
         <QuestionHeaderDate>
