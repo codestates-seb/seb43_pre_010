@@ -14,7 +14,8 @@ public enum ExceptionCode {
     MEMBER_EXIST(409, "Member exist"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(403, "Question can not change"),
-    CANNOT_READ_QUESTION(403, "Question can not read");
+    CANNOT_READ_QUESTION(403, "Question can not read"),
+    ANSWER_NOT_FOUND(404, "Answer not found");
 
     @Getter
     private int status;
