@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Navbar from "../components/common/Navbar";
+import HeaderBar from "../components/common/header/HeaderBar";
 
 const Home = () => {
   return (
     <HomeContainer>
-      <Navbar />
+      <HeaderBar />
     </HomeContainer>
   )
 }

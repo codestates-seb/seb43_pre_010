@@ -1,14 +1,13 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Avatar from "./Avatar";
-import Button from "./Button";
-import MenuButton from "./header/MenuButton";
-import { AchievementsSvg, CommunitySvg, GlassesSvg, HelpSvg, MailSvg, MessageSvg, SOIconSvg, SOLogoSvg } from "../../assets/Header/HeaderSVG";
-import SearchModal from "./header/SearchModal";
+import styled from "styled-components";
+import MenuButton from "./MenuButton";
+import SearchModal from "./SearchModal";
+import Avatar from "../Avatar";
+import Button from "../Button";
+import { AchievementsSvg, CommunitySvg, GlassesSvg, HelpSvg, MailSvg, MessageSvg, SOIconSvg, SOLogoSvg } from "../../../assets/Header/HeaderSVG";
 
-
-const Navbar = () => {
+const HeaderBar = () => {
 
   const [ isSelected, setIsSelected ] = useState(false);
   const [ isOpenedHint, setIsOpenedHint ] = useState(false);
@@ -19,12 +18,10 @@ const Navbar = () => {
   }
 
   return (
-    <NavbarWrapper>
-      <div className="navbar">
+    <HeaderWrapper>
+      <nav className="navbar">
         <MenuButton onClick={handleMenuBtnClick} isSelected={isSelected} />
-        <Link to='/' className="nav-items nav-logo">
-          <HeaberLogo/>
-        </Link>
+        <Link to='/' className="nav-items nav-logo"><HeaberLogo/></Link>
         <Link to='/' className="nav-items nav-btn">About</Link>
         <Link to='/' className="nav-items nav-btn">Products</Link>
         <Link to='/' className="nav-items nav-btn">For Teams</Link>
@@ -47,24 +44,24 @@ const Navbar = () => {
           <Button>Log out</Button>
         </Link>
       }
-      </div>
-    </NavbarWrapper>
+      </nav>
+    </HeaderWrapper>
   )
 }
 
-export default Navbar;
+export default HeaderBar;
 
 const HeaberLogo = styled.div`
-    background-image: url(https://cdn.sstatic.net/Img/unified/sprites.svg?v=fcc0ea44ba27);
-    width: 150px;
-    height: 30px;
-    background-position: 0 -500px;
-    display: inline-block;
-    text-align: -9999em;
-    margin-top: 5px;
+  background-image: url(https://cdn.sstatic.net/Img/unified/sprites.svg?v=fcc0ea44ba27);
+  width: 150px;
+  height: 30px;
+  background-position: 0 -500px;
+  display: inline-block;
+  text-align: -9999em;
+  margin-top: 5px;
 `;
 
-const NavbarWrapper = styled.nav`
+const HeaderWrapper = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
