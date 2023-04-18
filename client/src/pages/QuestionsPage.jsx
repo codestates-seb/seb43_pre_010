@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getQuestion } from "../api/api";
-import TemporaryLeftSideBar from "../components/common/TemporaryLeftSideBar";
-import QuestionContent from "../components/questions/QuestionContent";
-import QuestionAnswer from "../components/questions/QuestionAnswer";
-import QuestionHeader from "../components/questions/QuestionHeader";
-import QuestionAnswerInput from "../components/questions/QuestionAnswerInput";
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getQuestion } from '../api/api';
+import LeftNav from '../components/common/LeftNav';
+import QuestionContent from '../components/questions/QuestionContent';
+import QuestionAnswer from '../components/questions/QuestionAnswer';
+import QuestionHeader from '../components/questions/QuestionHeader';
+import QuestionAnswerInput from '../components/questions/QuestionAnswerInput';
 
 const Questions = () => {
   const [question, setQuestion] = useState(null);
@@ -26,7 +26,7 @@ const Questions = () => {
   }
   return (
     <MainContainer>
-      <TemporaryLeftSideBar />
+      <LeftNav />
       <QuestionContainer>
         <QuestionHeader title={question.title} />
         <QuestionHeaderDate>
@@ -44,8 +44,8 @@ const Questions = () => {
           </div>
         </QuestionHeaderDate>
         <QuestionContent content={question.content} />
-        <QuestionAnswer answers={question.answers}/>
-        <QuestionAnswerInput/>
+        <QuestionAnswer answers={question.answers} />
+        <QuestionAnswerInput />
       </QuestionContainer>
     </MainContainer>
   );

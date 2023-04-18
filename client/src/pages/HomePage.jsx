@@ -1,15 +1,5 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Home = () => {
-  return (
-    <HomeContainer>
-      
-    </HomeContainer>
-  )
-}
+const Home = () => {};
 
 export default Home;
-
-const HomeContainer = styled.div`
-
-`;
