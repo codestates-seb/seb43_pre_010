@@ -56,6 +56,7 @@ const HeaberLogo = styled.div`
     background-position: 0 -500px;
     display: inline-block;
     text-align: -9999em;
+    margin-top: 5px;
 `;
 
 const NavbarWrapper = styled.nav`
@@ -75,7 +76,8 @@ const NavbarWrapper = styled.nav`
   background-color: #f8f9f9;
 
   .nav-logo {
-    padding: 5px 25px;
+    padding: 0 calc(8px * 1);
+    height: 47px;
   }
 
   .nav-items {
@@ -105,13 +107,15 @@ const NavbarWrapper = styled.nav`
   .nav-btn {
     cursor: pointer;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 12px 12px;
+    line-height: 50%;
   }
 
   .navbar form {
     flex-grow: 1;
     position: relative;
     padding: 0 calc(8px * 1);
+    padding-left: 0;
     display: flex;
     align-items: center;
   }
@@ -133,7 +137,7 @@ const NavbarWrapper = styled.nav`
 
   .navbar form .iconSearch {
     position: absolute;
-    left: 25px;
+    left: 15px;
     top: 10px;
     fill: rgb(131, 140, 149);
   }
@@ -153,6 +157,8 @@ const NavbarWrapper = styled.nav`
   }
 
   .sign-btn {
+    padding-left: 10px;
+    padding-right: 10px;
     background-color: hsl(206, 100%, 52%);
     color: rgb(255, 255, 255);
     box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
