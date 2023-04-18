@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import Navbar from "../components/common/Navbar";
 
 const Home = () => {
   return (
     <HomeContainer>
-      
+      <Navbar />
     </HomeContainer>
   )
 }
