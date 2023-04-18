@@ -18,6 +18,22 @@
     "react/jsx-props-no-spreading": [1, { "custom": "ignore" }],
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "react/function-component-definition": [
+      true,
+      {
+        "namedComponents": ["function-declaration", "function-expression", "arrow-function"],
+        "unnamedComponents": ["function-expression", "arrow-function"]
+      }
+    ]
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   }
+  
 }
