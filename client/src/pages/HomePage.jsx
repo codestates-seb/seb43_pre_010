@@ -5,6 +5,7 @@ import { getQuestion } from '../api/api';
 import LeftNav from '../components/common/LeftNav';
 import MainnHeader from '../components/main/MainHeader';
 import MainContent from '../components/main/MainContent';
+import HeaderBar from "../components/common/header/HeaderBar";
 
 const Home = () => {
   const [questions, setQuestions] = useState(null);

@@ -32,6 +32,10 @@
         "namedComponents": ["function-declaration", "function-expression", "arrow-function"],
         "unnamedComponents": ["function-expression", "arrow-function"]
       }
-    ]
+    ],
+    "react/self-closing-comp": ["warn", {
+      "component": true,
+      "html": true
+    }]
   }
 }
