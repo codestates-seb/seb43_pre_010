@@ -1,6 +1,7 @@
 package tenten.StackOverflowClone.answer.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 public class AnswerDto {
@@ -10,7 +11,6 @@ public class AnswerDto {
     public static class Post{
         private long questionId;
 
-        // 회원 식별 Id
         private long userId;
 
         private String content;
@@ -37,11 +37,14 @@ public class AnswerDto {
 
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class Response{
         private long answerId;
         private long questionId;
         private long userId;
         private String content;
+        // private String user;
+        // private String vote;
 
     }
 }
