@@ -42,7 +42,7 @@ const RightNav = () => (
   </RightNavLayout>
 );
 
-const RightNavLayout = styled.div`
+const RightNavLayout = styled.nav`
   min-width: 300px;
   background-color: hsl(47, 87%, 94%);
   border: 1px solid hsl(47, 65%, 84%);
