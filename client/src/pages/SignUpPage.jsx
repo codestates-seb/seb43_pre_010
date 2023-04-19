@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import HeaderBar from "../components/common/header/HeaderBar";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
     <HeaderBar />
   )
 };
 
-export default LoginPage;
+export default SignUpPage;
