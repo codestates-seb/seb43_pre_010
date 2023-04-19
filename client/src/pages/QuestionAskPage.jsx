@@ -3,12 +3,14 @@ import MDEditor from '@uiw/react-md-editor';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AskBackground from '../assets/AskBackground.svg';
+import HeaderBar from '../components/common/header/HeaderBar';
 
 const QuestionAsk = () => {
   const [value, setValue] = useState('');
   const { questionId } = useParams();
   return (
     <AskBackGroundColor>
+      <HeaderBar />
       <AskPageContainer>
         <AskHeaderContainer>
           <h1 className="text-3xl font-semibold">Ask a public Question</h1>

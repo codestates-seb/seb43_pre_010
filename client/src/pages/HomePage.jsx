@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getQuestion } from '../api/api';
-
 import LeftNav from '../components/common/LeftNav';
-import MainnHeader from '../components/main/MainHeader';
+import MainHeader from '../components/main/MainHeader';
 import MainContent from '../components/main/MainContent';
-import HeaderBar from "../components/common/header/HeaderBar";
+import HeaderBar from '../components/common/header/HeaderBar';
 
 const Home = () => {
   const [questions, setQuestions] = useState(null);
@@ -24,9 +23,10 @@ const Home = () => {
   }
   return (
     <MainContainer>
+      <HeaderBar />
       <LeftNav />
       <HomeContainer>
-        <MainnHeader />
+        <MainHeader />
         <MainContent questions={questions} />
       </HomeContainer>
     </MainContainer>
