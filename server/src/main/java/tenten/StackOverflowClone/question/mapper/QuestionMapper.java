@@ -15,7 +15,7 @@ public interface QuestionMapper {
     default Question questionPostDtoToQuestion(QuestionDto.Post post) {
         Question question = new Question();
         User user = new User();
-//        user.setUserId(post.getUserId());
+        user.setId(post.getUserId());
 
         question.setUser(user);
         question.setTitle(post.getTitle());
@@ -27,23 +27,25 @@ public interface QuestionMapper {
     default Question questionPatchDtoToQuestion(QuestionDto.Patch patch) {
         Question question = new Question();
         User user = new User();
-//        user.setUserId(patch.getUserId());
+        user.setId(patch.getUserId());
 
         question.setUser(user);
-        question.setQuestionId(patch.getQuestionId());
+        question.setId(patch.getQuestionId());
         question.setTitle(patch.getTitle());
         question.setContent(patch.getContent());
 
         return question;
     }
 
-//    @Mapping(source = "user", target = "userId")
-    QuestionDto.QuestionPatchResponse questionToQuestionPatchResponseDto(Question question);
+    @Mapping(source = "user", target = "userId")
+    @Mapping(source = "id", target = "questionId")
+    QuestionDto.PatchResponse questionToQuestionPatchResponseDto(Question question);
 
-//    @Mapping(source = "user", target = "userId")
-    QuestionDto.QuestionResponse questionToQuestionResponseDto(Question question);
+    @Mapping(source = "user", target = "userId")
+    @Mapping(source = "id", target = "questionId")
+    QuestionDto.Response questionToQuestionResponseDto(Question question);
 
-    default List<QuestionDto.QuestionResponse> questionsToQuestionResponseDtos(List<Question> questions) {
+    default List<QuestionDto.Response> questionsToQuestionResponseDtos(List<Question> questions) {
         if (questions == null) {
             return null;
         }
@@ -53,7 +55,7 @@ public interface QuestionMapper {
                 .filter(question -> question.getQuestionStatus() != Question.QuestionStatus.QUESTION_DELETE)
                 .collect(Collectors.toList());
 
-        List<QuestionDto.QuestionResponse> responses = new ArrayList<>(readQuestions.size());
+        List<QuestionDto.Response> responses = new ArrayList<>(readQuestions.size());
 
         for (Question question : readQuestions) {
             responses.add(questionToQuestionResponseDto(question));
