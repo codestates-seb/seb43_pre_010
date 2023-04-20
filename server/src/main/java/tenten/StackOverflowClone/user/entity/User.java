@@ -3,8 +3,12 @@ package tenten.StackOverflowClone.user.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tenten.StackOverflowClone.answer.entity.Answer;
+import tenten.StackOverflowClone.question.entity.Question;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,7 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long userId;
 
     private String name;
 
@@ -26,13 +30,19 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private UserStatus userStatus = UserStatus.USER_ACTIVE;
+    private UserStatus userStatus;
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
+
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers = new ArrayList<>();
 
     public enum UserStatus{
 
