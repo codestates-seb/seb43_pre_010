@@ -98,8 +98,8 @@ export const SOLogoSvg = () => {
     <svg
       aria-hidden='true'
       className='native svg-icon iconLogoGlyphMd'
-      width='25'
-      height='25'
+      width='32'
+      height='37'
       viewBox='0 0 32 37'
     >
       <path d='M26 33v-9h4v13H0V24h4v9h22Z' fill='#BCBBBB' />
