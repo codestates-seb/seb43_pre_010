@@ -9,7 +9,7 @@ import QuestionHeader from '../components/questions/QuestionHeader';
 import QuestionAnswerInput from '../components/questions/QuestionAnswerInput';
 import HeaderBar from '../components/common/header/HeaderBar';
 
-const Questions = () => {
+const QuestionsPage = () => {
   const [question, setQuestion] = useState(null);
   const { questionId } = useParams();
 
@@ -60,7 +60,6 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  flex: 1 0 auto;
 `;
 
 const QuestionContainer = styled.div`
@@ -81,4 +80,4 @@ const QuestionHeaderDate = styled.div`
   border-bottom: 1px solid hsl(210, 8%, 90%);
 `;
 
-export default Questions;
+export default QuestionsPage;

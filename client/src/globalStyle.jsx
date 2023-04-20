@@ -26,6 +26,19 @@ const GlobalStyle = createGlobalStyle`
   ol, ul {
     list-style: none;
   }
+
+  code {
+    background-color: hsl(0, 0%, 96.5%);
+  }
+
+  pre {
+  background-color: hsl(0, 0%, 96.5%);
+  padding: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  }
+
 `;
 
 export default GlobalStyle;

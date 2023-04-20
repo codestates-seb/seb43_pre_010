@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import AskBackground from '../assets/AskBackground.svg';
 import HeaderBar from '../components/common/header/HeaderBar';
 
-const QuestionAsk = () => {
+const QuestionAskPage = () => {
   const [value, setValue] = useState('');
   const { questionId } = useParams();
   return (
@@ -143,4 +143,4 @@ const AskButton = styled.button`
   }
 `;
 
-export default QuestionAsk;
+export default QuestionAskPage;
