@@ -7,6 +7,14 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    height: 100%;
+  }
+
+  body {
+    padding-top: 50px;
+  }
+
   button {
     cursor: pointer;
   }
