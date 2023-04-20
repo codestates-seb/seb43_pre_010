@@ -3,7 +3,6 @@ package tenten.StackOverflowClone.question.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class QuestionController {
         Question question = mapper.questionPostDtoToQuestion(post);
 
         Question createdQuestion = service.createQuestion(question);
-        URI location = UriCreator.createUri("/questions", createdQuestion.getQuestionId());
+        URI location = UriCreator.createUri("/questions", createdQuestion.getId());
 
         return ResponseEntity.created(location).build();
     }
@@ -67,15 +65,29 @@ public class QuestionController {
         );
     }
 
+    // All Questions & Top Questions 모두 처리
     @GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam int page,
                                        @Positive @RequestParam int size,
-                                       @RequestParam String condition) {
-        Page<Question> pageQuestions = service.findQuestions(page - 1, size, condition);
+                                       @RequestParam String sort) {
+        Page<Question> pageQuestions = service.findQuestions(page - 1, size, sort);
         List<Question> questions = new ArrayList<>(pageQuestions.getContent());
 
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions), pageQuestions),
+                HttpStatus.OK
+        );
+    }
+
+    // 검색 기능 - 조건 : user의 id, exact phrase
+    // 확장 가능성 있음
+    @GetMapping("/search")
+    public ResponseEntity getQuestionsBySearching(@RequestParam String condition,
+                                                  @RequestParam String value) {
+        List<Question> questionsBySearching = service.findQuestionsBySearching(condition, value);
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questionsBySearching)),
                 HttpStatus.OK
         );
     }

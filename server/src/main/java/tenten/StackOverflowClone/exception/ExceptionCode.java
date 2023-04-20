@@ -17,6 +17,7 @@ public enum ExceptionCode {
     CANNOT_READ_QUESTION(403, "Question can not read"),
     CANNOT_DELETE_QUESTION(403, "Question can not delete"),
     ALREADY_DELETED_QUESTION(410, "Question is already deleted"),
+    CANNOT_CHANGE_QUESTIONLIKE(403, "QuestionLike can not change"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     ANSWER_NOT_FOUND(404, "Answer not found");
 

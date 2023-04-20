@@ -1,7 +1,7 @@
 package tenten.StackOverflowClone.question.dto;
 
 import lombok.*;
-//import tenten.StackOverflowClone.answer.dto.AnswerResponseDto;
+import tenten.StackOverflowClone.answer.dto.AnswerDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
 import tenten.StackOverflowClone.user.entity.User;
 
@@ -46,21 +46,21 @@ public class QuestionDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class QuestionPatchResponse {
+    public static class PatchResponse {
         private Long questionId;
         private Long userId;
         private String title;
         private String content;
         private LocalDateTime modifiedAt;
-//        public void setUserId(User user) {
-//            this.userId = user.getUserId();
-//        }
+        public void setUserId(User user) {
+            this.userId = user.getId();
+        }
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class QuestionResponse {
+    public static class Response {
         private Long questionId;
         private Long userId;
         private String title;
@@ -69,11 +69,11 @@ public class QuestionDto {
         private LocalDateTime modifiedAt;
         private Integer viewCount;
         private Integer scoreCount;
-//        private List<AnswerResponseDto> answers;
+        private List<AnswerDto.Response> answers;
 
-//        public void setUserId(User user) {
-//            this.userId = user.getUserId();
-//        }
+        public void setUserId(User user) {
+            this.userId = user.getId();
+        }
 
 //        public void setAnswers(List<Answer> answers) {
 //            this.answers = AnswerMapper.answersToAnswerResponseDtos(answers);
