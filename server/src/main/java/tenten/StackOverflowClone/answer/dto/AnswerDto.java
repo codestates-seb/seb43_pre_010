@@ -37,7 +37,7 @@ public class AnswerDto {
 
     @AllArgsConstructor
     @Getter
-    @Builder
+    //@Builder
     public static class Response{
         private long answerId;
         private long questionId;

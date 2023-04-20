@@ -36,4 +36,6 @@ public class UserDto {
                 message = "password 길이는 최소 8자 이상 최대 20자 이하, 숫자 1자 이상, 대소문자 구분없이 영문자 1자 이상, 특수문자 1자 이상 입력 해주세요.")
         private String password;
     }
+
+
 }

@@ -37,7 +37,7 @@ public class AnswerService {
 
     public Answer updateAnswer(Answer answer){
 
-        Answer findAnswer = findVerifiedAnswer(answer.getId());
+        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
 
         Optional.ofNullable(answer.getContent())
                 .ifPresent(content -> findAnswer.setContent(content));
@@ -45,13 +45,21 @@ public class AnswerService {
         return answerRepository.save(findAnswer);
     }
 
+    // 좋아요 상태 갱신 시 사용한다
+//    public Answer findAnswer(long questionId){
+//
+//        Answer answer = new Answer();
+//
+//        return answer;
+//    }
+
     // Question 상세 조회시 답변이 함께 조회된다.
     // List로 모든 데이터를 조회
+    // QuestionId로 Answer의 검색이 불가능하다
     public List<Answer> findAnswers(long questionId){
 
-        //return answerRepository.findAllByQuestionId(questionId);
+        return answerRepository.findByQuestion_QuestionId(questionId);
 
-        return null;
     }
 
     // 컬럼을 삭제하지 않고 상태를 변경함
