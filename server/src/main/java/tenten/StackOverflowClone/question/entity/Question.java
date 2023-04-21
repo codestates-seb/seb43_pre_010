@@ -43,6 +43,10 @@ public class Question extends Auditable {
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
     @OneToMany(mappedBy = "question")
     private List<QuestionLike> questionLikes = new ArrayList<>();
 

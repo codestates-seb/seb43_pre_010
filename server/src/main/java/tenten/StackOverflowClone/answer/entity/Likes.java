@@ -28,4 +28,7 @@ public class Likes {
     @Column
     private Boolean status;
 
+    //@Column(name = likes)
+    //private Boolean like;
+
 }

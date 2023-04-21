@@ -75,8 +75,8 @@ public class QuestionDto {
             this.userId = user.getUserId();
         }
 
-//        public void setAnswers(List<Answer> answers) {
-//            this.answers = AnswerMapper.answersToAnswerResponseDtos(answers);
-//        }
+        public void setAnswers(List<Answer> answers) {
+            this.answers = AnswerMapper.answersToAnswerResponseDtos(answers);
+        }
     }
 }

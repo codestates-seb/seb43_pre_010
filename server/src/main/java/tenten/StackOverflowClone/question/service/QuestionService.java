@@ -9,18 +9,12 @@ import tenten.StackOverflowClone.exception.BusinessLogicException;
 import tenten.StackOverflowClone.exception.ExceptionCode;
 import tenten.StackOverflowClone.question.entity.Question;
 import tenten.StackOverflowClone.question.repository.QuestionRepository;
-import tenten.StackOverflowClone.user.entity.User;
-import tenten.StackOverflowClone.user.service.UserService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 @Service
 @Transactional
