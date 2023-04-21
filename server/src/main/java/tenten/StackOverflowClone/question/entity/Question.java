@@ -19,7 +19,7 @@ import java.util.List;
 public class Question extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long questionId;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -41,10 +41,14 @@ public class Question extends Auditable {
     private User user;
 
     // ** 영속성 전이 설정 -> 부모 Question을 영속화할 때, 자식 Answer도 같이 영속화함
-//    @OneToMany(mappedBy = "question")
-//    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "question")
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
+    //    @OneToMany(mappedBy = "question")
 //    private List<QuestionLike> questionLikes = new ArrayList<>();
 
     //연관관계 편의 메서드

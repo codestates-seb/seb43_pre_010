@@ -8,16 +8,10 @@ import tenten.StackOverflowClone.exception.BusinessLogicException;
 import tenten.StackOverflowClone.exception.ExceptionCode;
 import tenten.StackOverflowClone.question.entity.Question;
 import tenten.StackOverflowClone.question.repository.QuestionRepository;
-import tenten.StackOverflowClone.user.entity.User;
-import tenten.StackOverflowClone.user.service.UserService;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 @Service
 @Transactional
@@ -39,7 +33,7 @@ public class QuestionService {
 
     public Question updateQuestion(Question question) {
         // 존재하는 question인지 확인
-        Question findQuestion = findVerifiedQuestion(question.getId());
+        Question findQuestion = findVerifiedQuestion(question.getQuestionId());
 
         // 질문 수정이 가능한지 확인
         checkUpdatePossibility(question, findQuestion);
@@ -143,7 +137,7 @@ public class QuestionService {
 //        changedQuestion.setUser(verifiedUser);
 
         // 2. 질문을 등록한 사용자가 or 관리자가 수정하는게 맞는지 확인
-        if (changedQuestion.getUser().getId() != originalQuestion.getUser().getId()) {
+        if (changedQuestion.getUser().getUserId() != originalQuestion.getUser().getUserId()) {
             if (!((changedQuestion.getUser().getEmail()).equals("admin@gmail.com"))) {
                 throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
             }
