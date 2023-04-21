@@ -38,11 +38,9 @@ public interface QuestionMapper {
     }
 
     @Mapping(source = "user", target = "userId")
-    @Mapping(source = "questionId", target = "questionId")
     QuestionDto.PatchResponse questionToQuestionPatchResponseDto(Question question);
 
     @Mapping(source = "user", target = "userId")
-    //@Mapping(source = "questionId", target = "questionId")
     QuestionDto.Response questionToQuestionResponseDto(Question question);
 
     default List<QuestionDto.Response> questionsToQuestionResponseDtos(List<Question> questions) {

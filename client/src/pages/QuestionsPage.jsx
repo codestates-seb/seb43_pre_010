@@ -7,6 +7,7 @@ import QuestionContent from '../components/questions/QuestionContent';
 import QuestionAnswer from '../components/questions/QuestionAnswer';
 import QuestionHeader from '../components/questions/QuestionHeader';
 import QuestionAnswerInput from '../components/questions/QuestionAnswerInput';
+import HeaderBar from '../components/common/header/HeaderBar';
 
 const Questions = () => {
   const [question, setQuestion] = useState(null);
@@ -26,6 +27,7 @@ const Questions = () => {
   }
   return (
     <MainContainer>
+      <HeaderBar />
       <LeftNav />
       <QuestionContainer>
         <QuestionHeader title={question.title} />

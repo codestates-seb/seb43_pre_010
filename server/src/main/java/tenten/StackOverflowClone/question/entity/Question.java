@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tenten.StackOverflowClone.answer.entity.Answer;
 import tenten.StackOverflowClone.auditing.Auditable;
-// import tenten.StackOverflowClone.questionlike.entity.QuestionLike;
 import tenten.StackOverflowClone.user.entity.User;
 
 import javax.persistence.*;
@@ -48,18 +47,18 @@ public class Question extends Auditable {
         this.answers = answers;
     }
 
-    //    @OneToMany(mappedBy = "question")
-//    private List<QuestionLike> questionLikes = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<QuestionLike> questionLikes = new ArrayList<>();
 
     //연관관계 편의 메서드
     // JPA와 달리, 객체의 양방향 연관관계는 양쪽 모두 관계를 맺어주어야함
-//    public void setUser(User user) {
-//        if (this.user != null) {
-//            this.user.getQuestions().remove(this);
-//        }
-//        this.user = user;
-//        user.getQuestions().add(this);
-//    }
+    public void setUser(User user) {
+        if (this.user != null) {
+            this.user.getQuestions().remove(this);
+        }
+        this.user = user;
+        user.getQuestions().add(this);
+    }
 
     public enum QuestionStatus {
         QUESTION_REGISTRATION("질문등록"),

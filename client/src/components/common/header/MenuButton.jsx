@@ -10,7 +10,7 @@ const MenuButton = ({ onClick, isSelected }) => {
 
 export default MenuButton;
 
-const StyledMenuButton = styled.div`
+const StyledMenuButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -2,6 +2,7 @@ package tenten.StackOverflowClone.question.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.exception.BusinessLogicException;
@@ -9,6 +10,8 @@ import tenten.StackOverflowClone.exception.ExceptionCode;
 import tenten.StackOverflowClone.question.entity.Question;
 import tenten.StackOverflowClone.question.repository.QuestionRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +22,10 @@ public class QuestionService {
     private final QuestionRepository repository;
 //    private final UserService userService;
 
-    public QuestionService(QuestionRepository repository) { //, UserService userService) {
+    @PersistenceContext
+    EntityManager entityManager;
+
+    public QuestionService(QuestionRepository repository) { // , UserService userService) {
         this.repository = repository;
 //        this.userService = userService;
     }
@@ -60,12 +66,18 @@ public class QuestionService {
     }
 
     // 검색 기능 이용하여 질문 조회
-    public List<Question> findQuestionsBySearching(String condition, String value) {
+    public Page<Question> findQuestionsBySearching(String condition, String value, int page, int size) {
+        // 영속성 컨텍스트 비우기
+        // 비우지 않으면, 영속성 컨텍스트에 남아있던 이전 쿼리의 결과들이 같이 보내짐
+        // 즉, 특정 기준값에 부합하지 않는 질문들을 같이 보내옴
+        entityManager.clear();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("questionId").descending());
+
         switch (condition.toLowerCase()) {
             case "user":
-                return repository.findByUserIdFromRecently(Long.parseLong(value));
+                return repository.findByUserIdFromRecently(Long.parseLong(value), pageable);
             case "exact phrase":
-                return repository.findByExactPhrase(value);
+                return repository.findByExactPhrase(value, pageable);
             default:
                 throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
         }
@@ -75,10 +87,10 @@ public class QuestionService {
         switch (sort.toLowerCase()) {
             // 최신순
             case "newest":
-                return repository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+                return repository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
             // 오래된순
             case "oldest":
-                return repository.findAll(PageRequest.of(page, size, Sort.by("id").ascending()));
+                return repository.findAll(PageRequest.of(page, size, Sort.by("questionId").ascending()));
             // 조회순
             case "viewcount":
                 return repository.findAll(PageRequest.of(page, size, Sort.by("viewCount").descending()));
@@ -99,21 +111,28 @@ public class QuestionService {
     }
 
     // scoreCount update하는 메서드
-//    public void updateQuestionScoreCount(Question question, String changedLikeResult) {
-//        switch (changedLikeResult) {
-//            case "true": // 좋아요
-//                question.setScoreCount(question.getScoreCount() + 1);
-//                break;
-//            case "false": // 싫어요
-//                question.setScoreCount(question.getScoreCount() - 1);
-//        }
-//
-//        saveQuestion(question);
-//    }
+    public void updateQuestionScoreCount(Question question, String changedLikeResult) {
+        switch (changedLikeResult) {
+            case "true": // 좋아요
+                question.setScoreCount(question.getScoreCount() + 1);
+                break;
+            case "false": // 싫어요
+                question.setScoreCount(question.getScoreCount() - 1);
+                break;
+            case "true_change": // '싫어요 -> 좋아요'로 변경한 경우
+                question.setScoreCount(question.getScoreCount() + 2);
+                break;
+            case "false_change": // '좋아요 -> 싫어요'로 변경한 경우
+                question.setScoreCount(question.getScoreCount() - 2);
+                break;
+        }
+
+        saveQuestion(question); // update Question query 하나 나감
+    }
 
     // 질문 작성 시 검증 -> 질문한 사용자가 존재하는지 확인
     private void verifyQuestionPost(Question question) {
-//        User user = userService.findVerifiedUser(question.getUser().getId());
+//        User user = userService.findVerifiedUser(question.getUser().getUserId());
 
 //        question.setUser(user);
     }
@@ -133,7 +152,7 @@ public class QuestionService {
 
     private void checkUpdatePossibility(Question changedQuestion, Question originalQuestion) {
         // 1. 회원이 수정하려는 건지 확인 -> getEmail()에서 NPE를 막기 위함
-//        User verifiedUser = userService.findVerifiedUser(changedQuestion.getUser().getId());
+//        User verifiedUser = userService.findVerifiedUser(changedQuestion.getUser().getUserId());
 //        changedQuestion.setUser(verifiedUser);
 
         // 2. 질문을 등록한 사용자가 or 관리자가 수정하는게 맞는지 확인
@@ -170,7 +189,7 @@ public class QuestionService {
         }
 
         // 3. 질문자가 삭제 시도를 한 거면 통과 -> 아니면 예외 발생
-        // ** security User 객체의 Username이 우리가 정의한 User의 email(이메일)이 맞는지 확인해야됨
+        // TODO: security User 객체의 Username이 우리가 정의한 User의 email(이메일)이 맞는지 확인해야됨
         if (!question.getUser().getEmail().equals(principal.getUsername())) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_DELETE_QUESTION);
         }
