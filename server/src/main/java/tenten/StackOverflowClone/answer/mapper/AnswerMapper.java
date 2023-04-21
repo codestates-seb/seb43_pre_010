@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import tenten.StackOverflowClone.answer.dto.AnswerDto;
-//import tenten.StackOverflowClone.answer.dto.AnswerResponseDto;
+import tenten.StackOverflowClone.answer.dto.AnswerResponseDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
 
 import java.util.ArrayList;
