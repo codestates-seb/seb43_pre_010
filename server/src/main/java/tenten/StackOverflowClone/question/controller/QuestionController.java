@@ -43,8 +43,9 @@ public class QuestionController {
     private final AnswerLikeMapper answerLikeMapper;
     private final AnswerLikeService answerLikeService;
     
-    public QuestionController(QuestionMapper mapper, QuestionService service, QuestionLikeMapper likeMapper, QuestionLikeService likeService
-    AnswerService answerService, AnswerLikeMapper answerLikeMapper, AnswerLikeService answerLikeService){
+    public QuestionController(QuestionMapper mapper, QuestionService service, QuestionLikeMapper likeMapper,
+                              QuestionLikeService likeService, AnswerService answerService,
+                              AnswerLikeMapper answerLikeMapper, AnswerLikeService answerLikeService){
         this.mapper = mapper;
         this.service = service;
         this.likeMapper = likeMapper;

@@ -1,0 +1,34 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  config:
+    use-legacy-processing: true
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create  # (1) 스키마 자동 생성
+    show-sql: true      # (2) SQL 쿼리 출력
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        color-codes: true
+        use_sql_comments: true
+        type:
+          descriptor:
+            sql: trace
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+#logging:
+#  level:
+#    com:
+#      amazonaws:
+#        util:
+#          EC2MetadataUtils: error
+
