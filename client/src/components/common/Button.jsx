@@ -12,8 +12,12 @@ const Button = ({ type, icon, text }) => {
 export default Button;
 
 const defaultStyle = css`
-  background-color: #0a95ff;
-  color: #ffffff;
+  background-color: rgb(10, 149, 255);
+  color: #ffffff !important;
+  box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
+  :hover {
+    background-color: hsl(206, 100%, 40%);
+  }
 `;
 
 const googleBtnStyle = css`
