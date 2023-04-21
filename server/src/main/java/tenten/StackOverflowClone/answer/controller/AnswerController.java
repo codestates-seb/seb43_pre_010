@@ -7,17 +7,14 @@ import tenten.StackOverflowClone.answer.dto.AnswerDto;
 import tenten.StackOverflowClone.answer.dto.LikeDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
 import tenten.StackOverflowClone.answer.entity.Likes;
+import tenten.StackOverflowClone.answer.mapper.AnswerLikeMapper;
 import tenten.StackOverflowClone.answer.mapper.AnswerMapper;
-import tenten.StackOverflowClone.answer.mapper.LikeMapper;
 import tenten.StackOverflowClone.answer.service.AnswerService;
-import tenten.StackOverflowClone.answer.service.LikeService;
+import tenten.StackOverflowClone.answer.service.AnswerLikeService;
 import tenten.StackOverflowClone.dto.SingleResponseDto;
-import tenten.StackOverflowClone.question.entity.Question;
-import tenten.StackOverflowClone.user.entity.User;
 import tenten.StackOverflowClone.utils.UriCreator;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
@@ -26,8 +23,8 @@ public class AnswerController {
     public final static String ANSWER_DEFAULT_URL = "/answers";
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
-    private final LikeService likeService;
-    private final LikeMapper likeMapper;
+    private final AnswerLikeService answerLikeService;
+    private final AnswerLikeMapper answerLikeMapper;
 
 //    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
 //        this.answerService = answerService;
@@ -35,11 +32,11 @@ public class AnswerController {
 //    }
 
 
-    public AnswerController(AnswerService answerService, AnswerMapper answerMapper, LikeService likeService, LikeMapper likeMapper) {
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper, AnswerLikeService answerLikeService, AnswerLikeMapper answerLikeMapper) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
-        this.likeService = likeService;
-        this.likeMapper = likeMapper;
+        this.answerLikeService = answerLikeService;
+        this.answerLikeMapper = answerLikeMapper;
     }
 
     // TODO: 추후 QuestionController로 이동
@@ -79,27 +76,6 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // TODO: 추후 QuestionController로 이동
-    @PostMapping("/{question-id}/answer/{answer-id}/like")
-    public ResponseEntity likeAnswer(@PathVariable("answer-id") long answerId,
-                           @RequestBody LikeDto.Post requestBody){
-        // 질문 검증
-        Answer answer = answerService.findVerifiedAnswer(answerId);
-
-        // TODO: 회원 정보 검증 로직 추가
-
-
-        Likes like = likeMapper.likeDtoToLikes(requestBody);
-
-        // true를 입력하지 않고, 컨트롤러 단에서 true를 set해준다
-        // FIXME: 서비스 클래스로 이동하는게 좋을지
-        like.setStatus(true);
-
-        likeService.createLike(like);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @PostMapping("/{question-id}/answer/{answer-id}/dislike")
     public ResponseEntity dislikeAnswer(@PathVariable("answer-id") long answerId,
                                         @RequestBody LikeDto.Post requestBody){
@@ -109,13 +85,13 @@ public class AnswerController {
         // TODO: 회원 정보 검증 로직 추가
 
 
-        Likes like = likeMapper.likeDtoToLikes(requestBody);
+        Likes like = answerLikeMapper.likeDtoToLikes(requestBody);
 
         // true를 입력하지 않고, 컨트롤러 단에서 false를 set해준다
         // FIXME: 서비스 클래스로 이동하는게 좋을지
         like.setStatus(false);
 
-        likeService.createLike(like);
+        answerLikeService.updateLike(like);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

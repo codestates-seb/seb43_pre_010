@@ -8,7 +8,9 @@ import tenten.StackOverflowClone.answer.dto.AnswerDto;
 import tenten.StackOverflowClone.answer.dto.AnswerResponseDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AnswerMapper {
@@ -30,10 +32,20 @@ public interface AnswerMapper {
     AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
     // static으로 선언 -> 수동으로 구현
-    List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers);
+    //List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers);
 
-    //List<AnswerResponseDto> answersToAnswerResponseDtosV2(List<Answer> answers)
+    static List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers){
+        return answers.stream()
+                .map(answer -> new AnswerDto.Response(
+                        answer.getAnswerId(),
+                        answer.getQuestion().getQuestionId(),
+                        answer.getUser().getUserId(),
+                        answer.getContent(),
+                        answer.getUser().getName(),
+                        answer.getScoreCount()))
+                .collect(Collectors.toList());
 
+    }
 
 
 }

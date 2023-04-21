@@ -43,8 +43,8 @@ public class AnswerDto {
         private long questionId;
         private long userId;
         private String content;
-        // private String user;
-        // private String vote;
+        private String username;
+        private Integer scoreCount;
 
     }
 }

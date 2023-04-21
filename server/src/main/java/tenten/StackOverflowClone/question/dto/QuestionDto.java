@@ -53,7 +53,7 @@ public class QuestionDto {
         private String content;
         private LocalDateTime modifiedAt;
         public void setUserId(User user) {
-            this.userId = user.getId();
+            this.userId = user.getUserId();
         }
     }
 
@@ -72,11 +72,11 @@ public class QuestionDto {
         private List<AnswerDto.Response> answers;
 
         public void setUserId(User user) {
-            this.userId = user.getId();
+            this.userId = user.getUserId();
         }
 
-//        public void setAnswers(List<Answer> answers) {
-//            this.answers = AnswerMapper.answersToAnswerResponseDtos(answers);
-//        }
+        public void setAnswers(List<Answer> answers) {
+            this.answers = AnswerMapper.answersToAnswerResponseDtos(answers);
+        }
     }
 }
