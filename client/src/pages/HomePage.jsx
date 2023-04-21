@@ -6,7 +6,7 @@ import MainHeader from '../components/main/MainHeader';
 import MainContent from '../components/main/MainContent';
 import HeaderBar from '../components/common/header/HeaderBar';
 
-const Home = () => {
+const HomePage = () => {
   const [questions, setQuestions] = useState(null);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const HomeContainer = styled.div`
   text-align: left;
 `;
 
-export default Home;
+export default HomePage;

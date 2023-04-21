@@ -1,9 +1,15 @@
+import { useState } from "react";
 import styled, { css } from "styled-components";
 import HeaderBar from "../components/common/header/HeaderBar";
+import Button from "../components/common/Button";
+import LoginForm from "../components/common/LoginForm";
 import { SOLogoSvg } from "../assets/Header/HeaderSVG";
 import { GoogleIcon, GithubIcon, FacebookIcon } from "../assets/Login/LoginSVG";
 
 const LoginPage = () => {
+
+  const [ isSignup, setIsSignup ] = useState(true);
+
   return (
   <>
     <HeaderBar />
@@ -11,20 +17,11 @@ const LoginPage = () => {
       <LoginContent>
         <SOLogoSvg />
         <SocialLogins>
-          <LoginButton type="google" >
-            <GoogleIcon />
-            <p>Log in with Google</p>
-          </LoginButton>
-          <LoginButton type="github" >
-            <GithubIcon />
-            <p>Log in with GitHub</p>
-          </LoginButton>
-          <LoginButton type="facebook" >
-            <FacebookIcon />
-            <p>Log in with Facebook</p>
-          </LoginButton>
+          <Button type="google" icon={<GoogleIcon />} text={`${isSignup ? "Sign up" : "Log in"} with Google`} />
+          <Button type="github" icon={<GithubIcon />} text={`${isSignup ? "Sign up" : "Log in"} with GitHub`} />
+          <Button type="facebook" icon={<FacebookIcon />} text={`${isSignup ? "Sign up" : "Log in"} with Facebook`} />
         </SocialLogins>
-        폼
+          <LoginForm isSignup={isSignup} />
       </LoginContent>
     </LoginPageWrapper>
   </>
@@ -65,57 +62,4 @@ const SocialLogins = styled.div`
   flex-direction: column;
   width: 278px;
   margin-bottom: 16px;
-`;
-
-const defaultStyle = css`
-  background-color: #0a95ff;
-  color: #ffffff;
-`;
-
-const googleBtnStyle = css`
-  background-color: #ffffff;
-  color: #3b4045;
-`;
-
-const gitHubBtnStyle = css`
-  background-color: #2f3337;
-  color: #ffffff;  
-`;
-
-const facebookBtnStyle = css`
-  background-color: #385499;
-  color: #ffffff;  
-`;
-
-const LoginButton = styled.button`
-  width: 100%;
-  height: 37.78px;
-  background-color: aqua;
-  margin: 4px 0px;
-  border-radius: 5px;
-  font-size: 13px;
-  font-weight: 400;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgb(214, 217, 220);
-
-  ${( { type } ) => {
-    switch (type) {
-      case 'google' :
-        return googleBtnStyle;
-      case 'github' :
-        return gitHubBtnStyle;
-      case 'facebook' :
-        return facebookBtnStyle;
-      default :
-        return defaultStyle;
-    }
-  }}
-
-  > p {
-    margin-left: 5px;
-    line-height: 50%;
-  }
 `;
