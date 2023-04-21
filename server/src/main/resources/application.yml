@@ -25,15 +25,10 @@ spring:
             sql: trace
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
-  cloud:
-    aws:
-      stack:
-        auto: false
 #logging:
 #  level:
 #    com:
 #      amazonaws:
 #        util:
 #          EC2MetadataUtils: error
-
 
