@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import tenten.StackOverflowClone.dto.MultiResponseDto;
 import tenten.StackOverflowClone.dto.SingleResponseDto;
 import tenten.StackOverflowClone.question.dto.QuestionDto;
+import tenten.StackOverflowClone.question.dto.QuestionLikeDto;
 import tenten.StackOverflowClone.question.entity.Question;
+import tenten.StackOverflowClone.question.entity.QuestionLike;
+import tenten.StackOverflowClone.question.mapper.QuestionLikeMapper;
 import tenten.StackOverflowClone.question.mapper.QuestionMapper;
+import tenten.StackOverflowClone.question.service.QuestionLikeService;
 import tenten.StackOverflowClone.question.service.QuestionService;
 import tenten.StackOverflowClone.utils.UriCreator;
 
@@ -27,10 +31,15 @@ import java.util.List;
 public class QuestionController {
     private final QuestionMapper mapper;
     private final QuestionService service;
+    private final QuestionLikeMapper likeMapper;
+    private final QuestionLikeService likeService;
 
-    public QuestionController(QuestionMapper mapper, QuestionService service) {
+    public QuestionController(QuestionMapper mapper, QuestionService service,
+                              QuestionLikeMapper likeMapper, QuestionLikeService likeService) {
         this.mapper = mapper;
         this.service = service;
+        this.likeMapper = likeMapper;
+        this.likeService = likeService;
     }
 
     @PostMapping("/ask")
@@ -38,7 +47,7 @@ public class QuestionController {
         Question question = mapper.questionPostDtoToQuestion(post);
 
         Question createdQuestion = service.createQuestion(question);
-        URI location = UriCreator.createUri("/questions", createdQuestion.getId());
+        URI location = UriCreator.createUri("/questions", createdQuestion.getQuestionId());
 
         return ResponseEntity.created(location).build();
     }
@@ -80,14 +89,18 @@ public class QuestionController {
     }
 
     // 검색 기능 - 조건 : user의 id, exact phrase
+    // 페이지네이션 기능도 추가 -> client로부터 page, size를 받음(정렬은 최신순이 default)
     // 확장 가능성 있음
     @GetMapping("/search")
     public ResponseEntity getQuestionsBySearching(@RequestParam String condition,
-                                                  @RequestParam String value) {
-        List<Question> questionsBySearching = service.findQuestionsBySearching(condition, value);
+                                                  @RequestParam String value,
+                                                  @Positive @RequestParam int page,
+                                                  @Positive @RequestParam int size) {
+        Page<Question> pageQuestions = service.findQuestionsBySearching(condition, value, page - 1, size);
+        List<Question> questions = new ArrayList<>(pageQuestions.getContent());
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questionsBySearching)),
+                new MultiResponseDto<>(mapper.questionsToQuestionResponseDtos(questions), pageQuestions),
                 HttpStatus.OK
         );
     }
@@ -99,5 +112,45 @@ public class QuestionController {
 
         service.deleteQuestion(questionId, principal);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // 특정 질문의 좋아요 버튼을 누른 경우
+    @PostMapping("/{question-id}/like")
+    public ResponseEntity postLikeToQuestion(@PathVariable("question-id") @Positive long questionId,
+                                           @Valid @RequestBody QuestionLikeDto.Post post) {
+        post.setQuestionId(questionId);
+
+        QuestionLike questionLike = likeMapper.questionLikePostDtoToQuestionLike(post);
+        questionLike.setLike(true);
+
+        QuestionLike pressedQuestionLike = likeService.pressQuestionLike(questionLike);
+
+        if (pressedQuestionLike == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            return new ResponseEntity<>(likeMapper.questionLikeToQuestionLikeResponseDto(pressedQuestionLike),
+                    HttpStatus.OK);
+        }
+    }
+
+    // 특정 질문의 싫어요 버튼을 누른 경우
+    @PostMapping("/{question-id}/unlike")
+    public ResponseEntity postUnlikeToQuestion(@PathVariable("question-id") @Positive long questionId,
+                                           @Valid @RequestBody QuestionLikeDto.Post post) {
+        post.setQuestionId(questionId);
+
+        QuestionLike questionLike = likeMapper.questionLikePostDtoToQuestionLike(post);
+        questionLike.setLike(false);
+
+        QuestionLike pressedQuestionLike = likeService.pressQuestionLike(questionLike);
+
+        if (pressedQuestionLike == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            return new ResponseEntity<>(likeMapper.questionLikeToQuestionLikeResponseDto(pressedQuestionLike),
+                    HttpStatus.OK);
+        }
     }
 }
