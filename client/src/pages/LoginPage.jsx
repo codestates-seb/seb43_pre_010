@@ -1,13 +1,14 @@
-import { useState } from "react";
-import styled, { css } from "styled-components";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import HeaderBar from "../components/common/header/HeaderBar";
 import LoginForm from "../components/common/LoginForm";
 import AboutSignUp from "../components/AboutSignUp";
 
 const LoginPage = () => {
 
-  const [ isSignup, setIsSignup ] = useState(true);
-
+  const { usersId } = useParams();
+  const isSignup = usersId === 'signup';
+  
   return (
   <>
     <HeaderBar />
