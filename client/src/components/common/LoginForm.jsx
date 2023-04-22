@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
 import { SignUpHelpIcon, SignUpTalentIcon, GoogleIcon, GithubIcon, FacebookIcon } from "../../assets/Login/LoginSVG";
@@ -6,6 +7,16 @@ import PrivacyImg from "../../assets/Login/PrivacyImg.png";
 import { SOLogoSvg } from "../../assets/Header/HeaderSVG";
 
 const LoginForm = ({ isSignup }) => {
+
+  const navigate = useNavigate();
+
+  const handleRouteClick = () => {
+    if (isSignup) {
+      navigate("/users/login");
+    } else {
+      navigate("/users/signup");
+    }
+  };
 
   return (
     <LoginFormWrapper isSignup={isSignup}>
@@ -64,7 +75,7 @@ const LoginForm = ({ isSignup }) => {
         </form>
         <p className="bottom-text">
           { isSignup ? "Already have an account?" : "Don't have an account?"}
-          <button type="button" >{isSignup ? "Log in" : "Sign up"}</button>
+          <button type="button" onClick={handleRouteClick}>{isSignup ? "Log in" : "Sign up"}</button>
         </p>
         <div className="employer-help ">
           <p>Are you an employer?</p>
