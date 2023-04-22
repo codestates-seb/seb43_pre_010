@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
-const Button = ({ type, icon, text }) => {
+const Button = ({ type, icon, text, onClick }) => {
   return (
-    <LoginButton type={type}>
+    <LoginButton type={type} onClick={onClick} >
       { icon }
       <p>{text}</p>
     </LoginButton>
@@ -35,6 +35,12 @@ const facebookBtnStyle = css`
   color: #ffffff;  
 `;
 
+const logoutBtnStyle = css`
+  ${defaultStyle}
+  width: 70px;
+  padding-right: 5px;
+`;
+
 const LoginButton = styled.button`
   width: 100%;
   height: 37.78px;
@@ -57,6 +63,8 @@ const LoginButton = styled.button`
         return gitHubBtnStyle;
       case 'facebook' :
         return facebookBtnStyle;
+      case "logout" :
+        return logoutBtnStyle;
       default :
         return defaultStyle;
     }
