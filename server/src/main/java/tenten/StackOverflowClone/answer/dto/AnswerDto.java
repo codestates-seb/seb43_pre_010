@@ -1,8 +1,9 @@
 package tenten.StackOverflowClone.answer.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+
+import javax.validation.constraints.NotEmpty;
 
 public class AnswerDto {
 
@@ -10,9 +11,9 @@ public class AnswerDto {
     @AllArgsConstructor
     public static class Post{
         private long questionId;
-
         private long userId;
 
+        @NotEmpty(message = "질문 내용을 작성해주세요")
         private String content;
 
         public void addQuestionId(long questionId){
@@ -28,6 +29,8 @@ public class AnswerDto {
     @AllArgsConstructor
     public static class Patch{
         private long answerId;
+
+        @NotEmpty(message = "질문 내용을 작성해주세요")
         private String content;
 
         public void setAnswerId(long answerId) {
@@ -37,7 +40,6 @@ public class AnswerDto {
 
     @AllArgsConstructor
     @Getter
-    //@Builder
     public static class Response{
         private long answerId;
         private long questionId;

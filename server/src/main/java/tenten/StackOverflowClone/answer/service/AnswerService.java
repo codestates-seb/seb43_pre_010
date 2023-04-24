@@ -1,6 +1,5 @@
 package tenten.StackOverflowClone.answer.service;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.answer.entity.Answer;
 import tenten.StackOverflowClone.answer.repository.AnswerRepository;
@@ -9,7 +8,6 @@ import tenten.StackOverflowClone.exception.ExceptionCode;
 import tenten.StackOverflowClone.question.entity.Question;
 import tenten.StackOverflowClone.question.service.QuestionService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,14 +48,6 @@ public class AnswerService {
 
         return answerRepository.save(findAnswer);
     }
-
-    // 좋아요 상태 갱신 시 사용한다
-//    public Answer findAnswer(long questionId){
-//
-//        Answer answer = new Answer();
-//
-//        return answer;
-//    }
 
     // Question 상세 조회시 답변이 함께 조회된다.
     // List로 모든 데이터를 조회
