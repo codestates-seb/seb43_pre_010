@@ -4,13 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tenten.StackOverflowClone.answer.dto.AnswerDto;
-import tenten.StackOverflowClone.answer.dto.LikeDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
-import tenten.StackOverflowClone.answer.entity.Likes;
 import tenten.StackOverflowClone.answer.mapper.AnswerLikeMapper;
 import tenten.StackOverflowClone.answer.mapper.AnswerMapper;
-import tenten.StackOverflowClone.answer.service.AnswerService;
 import tenten.StackOverflowClone.answer.service.AnswerLikeService;
+import tenten.StackOverflowClone.answer.service.AnswerService;
 import tenten.StackOverflowClone.dto.SingleResponseDto;
 import tenten.StackOverflowClone.utils.UriCreator;
 
@@ -25,12 +23,6 @@ public class AnswerController {
     private final AnswerMapper answerMapper;
     private final AnswerLikeService answerLikeService;
     private final AnswerLikeMapper answerLikeMapper;
-
-//    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
-//        this.answerService = answerService;
-//        this.answerMapper = answerMapper;
-//    }
-
 
     public AnswerController(AnswerService answerService, AnswerMapper answerMapper, AnswerLikeService answerLikeService, AnswerLikeMapper answerLikeMapper) {
         this.answerService = answerService;
@@ -75,40 +67,6 @@ public class AnswerController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @PostMapping("/{question-id}/answer/{answer-id}/dislike")
-    public ResponseEntity dislikeAnswer(@PathVariable("answer-id") long answerId,
-                                        @RequestBody LikeDto.Post requestBody){
-        // 질문 검증
-        Answer answer = answerService.findVerifiedAnswer(answerId);
-
-        // TODO: 회원 정보 검증 로직 추가
-
-
-        Likes like = answerLikeMapper.likeDtoToLikes(requestBody);
-
-        // true를 입력하지 않고, 컨트롤러 단에서 false를 set해준다
-        // FIXME: 서비스 클래스로 이동하는게 좋을지
-        like.setStatus(false);
-
-        answerLikeService.updateLike(like);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-
-    }
-
-
-
-//    @GetMapping("/test/{question-id}")
-//    public ResponseEntity getAnswer(@PathVariable("question-id")long questionId){
-//
-//        List<Answer> answers = answerService.findAnswers(questionId);
-//
-//        return new ResponseEntity<>(answerMapper.answersToAnswerResponseDtos(answers), HttpStatus.OK);
-//
-//    }
-
-
 
 
 }

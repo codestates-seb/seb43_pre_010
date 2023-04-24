@@ -1,11 +1,9 @@
 package tenten.StackOverflowClone.answer.service;
 
 import org.springframework.stereotype.Service;
-import tenten.StackOverflowClone.answer.entity.Answer;
 import tenten.StackOverflowClone.answer.entity.Likes;
 import tenten.StackOverflowClone.answer.repository.AnswerLikeRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
