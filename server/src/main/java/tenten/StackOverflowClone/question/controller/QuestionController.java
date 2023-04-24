@@ -43,7 +43,7 @@ public class QuestionController {
     private final AnswerLikeMapper answerLikeMapper;
     private final AnswerLikeService answerLikeService;
     
-    public QuestionController(QuestionMapper mapper, QuestionService service, QuestionLikeMapper likeMapper, QuestionLikeService likeService
+    public QuestionController(QuestionMapper mapper, QuestionService service, QuestionLikeMapper likeMapper, QuestionLikeService likeService,
     AnswerService answerService, AnswerLikeMapper answerLikeMapper, AnswerLikeService answerLikeService){
         this.mapper = mapper;
         this.service = service;
@@ -134,7 +134,7 @@ public class QuestionController {
 
     // Answer 관련 핸들러
     @PostMapping("/{question-id}/{answer-id}/like")
-    public ResponseEntity likeAnswer(@PathVariable("answer-id") long answerId,
+    public ResponseEntity likeAnswer(@PathVariable("answer-id") @Positive long answerId,
                                      @RequestBody LikeDto.Post requestBody){
         // 질문 검증
         Answer answer = answerService.findVerifiedAnswer(answerId);
@@ -153,7 +153,7 @@ public class QuestionController {
     }
 
     @PostMapping("/{question-id}/{answer-id}/dislike")
-    public ResponseEntity dislikeAnswer(@PathVariable("answer-id") long answerId,
+    public ResponseEntity dislikeAnswer(@PathVariable("answer-id") @Positive long answerId,
                                      @RequestBody LikeDto.Post requestBody){
         // 질문 검증
         Answer answer = answerService.findVerifiedAnswer(answerId);

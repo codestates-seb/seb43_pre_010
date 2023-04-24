@@ -2,13 +2,10 @@ package tenten.StackOverflowClone.answer.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import tenten.StackOverflowClone.answer.dto.AnswerDto;
-import tenten.StackOverflowClone.answer.dto.AnswerResponseDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
