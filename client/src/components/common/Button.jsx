@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
-const Button = ({ type, icon, text }) => {
+const Button = ({ type, icon, text, onClick }) => {
   return (
-    <LoginButton type={type}>
+    <LoginButton type={type} onClick={onClick} >
       { icon }
       <p>{text}</p>
     </LoginButton>
@@ -12,8 +12,12 @@ const Button = ({ type, icon, text }) => {
 export default Button;
 
 const defaultStyle = css`
-  background-color: #0a95ff;
-  color: #ffffff;
+  background-color: rgb(10, 149, 255);
+  color: #ffffff !important;
+  box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
+  :hover {
+    background-color: hsl(206, 100%, 40%);
+  }
 `;
 
 const googleBtnStyle = css`
@@ -29,6 +33,12 @@ const gitHubBtnStyle = css`
 const facebookBtnStyle = css`
   background-color: #385499;
   color: #ffffff;  
+`;
+
+const logoutBtnStyle = css`
+  ${defaultStyle}
+  width: 70px;
+  padding-right: 5px;
 `;
 
 const LoginButton = styled.button`
@@ -53,6 +63,8 @@ const LoginButton = styled.button`
         return gitHubBtnStyle;
       case 'facebook' :
         return facebookBtnStyle;
+      case "logout" :
+        return logoutBtnStyle;
       default :
         return defaultStyle;
     }
