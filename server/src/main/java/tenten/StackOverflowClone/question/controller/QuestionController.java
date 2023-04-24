@@ -3,6 +3,7 @@ package tenten.StackOverflowClone.question.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +56,7 @@ public class QuestionController {
     }
     
 
-    @PostMapping("/ask")
+    @PostMapping()
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post post) {
         Question question = mapper.questionPostDtoToQuestion(post);
 
@@ -65,7 +66,7 @@ public class QuestionController {
         return ResponseEntity.created(location).build();
     }
 
-    @PatchMapping("/{question-id}/edit")
+    @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                         @Valid @RequestBody QuestionDto.Patch patch) {
         patch.setQuestionId(questionId);
@@ -123,12 +124,12 @@ public class QuestionController {
         );
     }
 
+    // Spring security에서 디폴트로, UserDetailsService에서 return한 객체인 User를 매개변수로 받을 수도 있겠지만,
+    // TODO : 우리가 정의한 User를 상속 받은 Custom UserDetails를 파라미터로 받을 것
     @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId,
-                                         HttpSession httpSession) {
-        User principal = (User)httpSession.getAttribute("principal");
-
-        service.deleteQuestion(questionId, principal);
+                                         @AuthenticationPrincipal User user) {
+        service.deleteQuestion(questionId, user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -193,7 +194,7 @@ public class QuestionController {
     }
 
     // 특정 질문의 싫어요 버튼을 누른 경우
-    @PostMapping("/{question-id}/unlike")
+    @PostMapping("/{question-id}/dislike")
     public ResponseEntity postUnlikeToQuestion(@PathVariable("question-id") @Positive long questionId,
                                            @Valid @RequestBody QuestionLikeDto.Post post) {
         post.setQuestionId(questionId);
