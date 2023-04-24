@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.exception.BusinessLogicException;
 import tenten.StackOverflowClone.exception.ExceptionCode;
@@ -100,11 +101,11 @@ public class QuestionService {
         }
     }
 
-    public void deleteQuestion(long questionId, org.springframework.security.core.userdetails.User principal) {
+    public void deleteQuestion(long questionId, User user) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
         // 삭제가 가능한지 확인
-        checkDeletePossibility(findQuestion, principal);
+        checkDeletePossibility(findQuestion, user);
 
         findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_DELETE);
         saveQuestion(findQuestion);
@@ -176,7 +177,7 @@ public class QuestionService {
     }
 
     private void checkDeletePossibility(Question question,
-                                        org.springframework.security.core.userdetails.User principal) {
+                                        User user) {
         // 1. 질문이 이미 삭제 상태인지 확인
         if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_DELETE) {
             // 410 Gone
@@ -184,13 +185,13 @@ public class QuestionService {
         }
 
         // 2. 관리자가 삭제 시도를 한 거면 통과
-        if (principal.getUsername().equals("admin@gmail.com")) {
+        if (user.getUsername().equals("admin@gmail.com")) {
             return;
         }
 
         // 3. 질문자가 삭제 시도를 한 거면 통과 -> 아니면 예외 발생
-        // TODO: security User 객체의 Username이 우리가 정의한 User의 email(이메일)이 맞는지 확인해야됨
-        if (!question.getUser().getEmail().equals(principal.getUsername())) {
+        // Spring Security User 객체의 Username == 우리가 정의한 User의 email
+        if (!question.getUser().getEmail().equals(user.getUsername())) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_DELETE_QUESTION);
         }
     }
