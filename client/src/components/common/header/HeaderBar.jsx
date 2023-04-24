@@ -35,8 +35,8 @@ const HeaderBar = () => {
         </form>
         { User === null ?
         <>
-        <Link to='/users/login' className="nav-items nav-links">Log in</Link> 
-        <Link to='/users/signup' className="nav-items nav-links sign-btn">Sign up</Link>
+        <Link to='/auth/login' className="nav-items nav-links">Log in</Link> 
+        <Link to='/auth/signup' className="nav-items nav-links sign-btn">Sign up</Link>
         </>
         :
         <Link to='/' className="">
