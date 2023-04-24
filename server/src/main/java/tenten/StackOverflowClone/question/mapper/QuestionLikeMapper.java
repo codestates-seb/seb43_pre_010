@@ -23,7 +23,7 @@ public interface QuestionLikeMapper {
         return questionLike;
     }
 
-    @Mapping(source = "user", target = "userId")
+    @Mapping(source = "user", target = "name")
     @Mapping(source = "question", target = "questionId")
     QuestionLikeDto.Response questionLikeToQuestionLikeResponseDto(QuestionLike questionLike);
 }
