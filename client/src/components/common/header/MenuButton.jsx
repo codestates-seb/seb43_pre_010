@@ -11,13 +11,16 @@ const MenuButton = ({ onClick, isSelected }) => {
 export default MenuButton;
 
 const StyledMenuButton = styled.button`
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   cursor: pointer;
   width: 48px;
   height: 47px;
+  @media screen and (max-width: 650px) {
+    display: flex;
+  }
 
   > span {
     display: inline-block;
