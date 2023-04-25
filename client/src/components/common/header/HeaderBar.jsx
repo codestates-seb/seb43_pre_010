@@ -1,6 +1,9 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { logout } from '../../../slices/authSlice';
 import MenuButton from "./MenuButton";
 import SearchModal from "./SearchModal";
 import Avatar from "../Avatar";
@@ -9,12 +12,33 @@ import { GlassesSvg } from "../../../assets/Header/HeaderSVG";
 
 const HeaderBar = () => {
 
+  const [ isLogIn, setIsLogIn ] = useState(false);
   const [ isSelected, setIsSelected ] = useState(false);
   const [ isOpenedHint, setIsOpenedHint ] = useState(false);
-  const User = "123";
+  const [ cookies, removeCookie ] = useCookies(['jwt']);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const token = cookies.jwt;
+
+  useEffect(() => {
+    if (token) {
+      setIsLogIn(true);
+    }
+  }, []);
 
   const handleMenuBtnClick = () => {
     setIsSelected(!isSelected);
+  }
+
+  const handleLogOut = () => {
+    dispatch(logout());
+    removeCookie("jwt", token, { expires: new Date(0)});
+    setIsLogIn(false);
+
+    navigate("/");
+    window.location.reload();
   }
 
   return (
@@ -33,20 +57,20 @@ const HeaderBar = () => {
             : null
           }
         </form>
-        { User === null ?
-        <>
-        <Link to='/auth/login' className="nav-items nav-links">Log in</Link> 
-        <Link to='/auth/signup' className="nav-items nav-links sign-btn">Sign up</Link>
-        </>
+        { isLogIn ?
+          <Link to='/' className="islogin-items">
+            <Avatar>M</Avatar>
+            <Button 
+              type="logout"
+              text="Log out"
+              onClick={handleLogOut}
+            />
+          </Link>
         :
-        <Link to='/' className="islogin-items">
-          <Avatar>M</Avatar>
-          <Button 
-            type="logout"
-            text="Log out"
-            onClick={() => {}}
-          />
-        </Link>
+        <>
+          <Link to='/auth/login' className="nav-items nav-links">Log in</Link> 
+          <Link to='/auth/signup' className="nav-items nav-links sign-btn">Sign up</Link>
+        </>
       }
       </nav>
     </HeaderWrapper>
