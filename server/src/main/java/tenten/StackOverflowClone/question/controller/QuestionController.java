@@ -7,9 +7,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tenten.StackOverflowClone.answer.dto.LikeDto;
+import tenten.StackOverflowClone.answer.dto.AnswerLikeDto;
 import tenten.StackOverflowClone.answer.entity.Answer;
-import tenten.StackOverflowClone.answer.entity.Likes;
+import tenten.StackOverflowClone.answer.entity.AnswerLike;
 import tenten.StackOverflowClone.answer.mapper.AnswerLikeMapper;
 import tenten.StackOverflowClone.answer.service.AnswerLikeService;
 import tenten.StackOverflowClone.answer.service.AnswerService;
@@ -25,7 +25,6 @@ import tenten.StackOverflowClone.question.service.QuestionLikeService;
 import tenten.StackOverflowClone.question.service.QuestionService;
 import tenten.StackOverflowClone.utils.UriCreator;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -136,14 +135,14 @@ public class QuestionController {
     // Answer 관련 핸들러
     @PostMapping("/{question-id}/{answer-id}/like")
     public ResponseEntity likeAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                     @RequestBody LikeDto.Post requestBody){
+                                     @RequestBody AnswerLikeDto.Post requestBody){
         // 질문 검증
         Answer answer = answerService.findVerifiedAnswer(answerId);
 
         // TODO: 회원 정보 검증 로직 추가
 
         // 회원 정보, 답변 정보를 받는다.
-        Likes like = answerLikeMapper.likeDtoToLikes(requestBody);
+        AnswerLike like = answerLikeMapper.likeDtoToLikes(requestBody);
 
         // true를 입력하지 않고, 컨트롤러 단에서 true를 set해준다
         like.setStatus(true);
@@ -155,14 +154,14 @@ public class QuestionController {
 
     @PostMapping("/{question-id}/{answer-id}/dislike")
     public ResponseEntity dislikeAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                     @RequestBody LikeDto.Post requestBody){
+                                     @RequestBody AnswerLikeDto.Post requestBody){
         // 질문 검증
         Answer answer = answerService.findVerifiedAnswer(answerId);
 
         // TODO: 회원 정보 검증 로직 추가
 
         // 회원 정보, 답변 정보를 받는다.
-        Likes like = answerLikeMapper.likeDtoToLikes(requestBody);
+        AnswerLike like = answerLikeMapper.likeDtoToLikes(requestBody);
 
         // false를 입력하지 않고, 컨트롤러 단에서 false를 set해준다
         like.setStatus(false);

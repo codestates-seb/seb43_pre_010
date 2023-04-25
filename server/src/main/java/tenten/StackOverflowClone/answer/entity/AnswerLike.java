@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-public class Likes {
+public class AnswerLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long LikesId;
