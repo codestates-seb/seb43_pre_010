@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { GetUnstuckIcon, UnlockIcon, TagsIcon, BadgesIcon } from "../assets/Login/SignUpSVG";
+import { GetUnstuckIcon, UnlockIcon, TagsIcon, BadgesIcon } from "../../assets/Login/SignUpSVG";
 
 const AboutSignUp = () => {
   return (

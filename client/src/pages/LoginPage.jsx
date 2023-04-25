@@ -1,21 +1,15 @@
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import HeaderBar from "../components/common/header/HeaderBar";
-import LoginForm from "../components/common/LoginForm";
-import AboutSignUp from "../components/AboutSignUp";
+import LoginForm from "../components/user/LoginForm";
 
 const LoginPage = () => {
-
-  const { usersId } = useParams();
-  const isSignup = usersId === 'signup';
   
   return (
   <>
     <HeaderBar />
-    <LoginPageWrapper isSignup={isSignup}>
+    <LoginPageWrapper >
       <LoginContent>
-        { isSignup && <AboutSignUp />}
-        <LoginForm isSignup={isSignup} />
+        <LoginForm />
       </LoginContent>
     </LoginPageWrapper>
   </>
@@ -24,7 +18,7 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-const LoginPageWrapper = styled.div`
+export const LoginPageWrapper = styled.div`
   width: 100vw;
   max-width: 100%;
   display: flex;
@@ -34,11 +28,11 @@ const LoginPageWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   background-attachment: scroll;
-  height: ${({ isSignup }) => isSignup ? "100%" : "calc(100vh - 50px)" };
-  min-height: ${({ isSignup }) => !isSignup && "600px" };
+  height: "calc(100vh - 50px)";
+  min-height: "600px";
 `;
 
-const LoginContent = styled.div`
+export const LoginContent = styled.div`
   width: 100%;
   max-width: 1264px;
   margin: 0;
