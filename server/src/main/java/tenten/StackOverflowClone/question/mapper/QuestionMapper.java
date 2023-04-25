@@ -37,10 +37,10 @@ public interface QuestionMapper {
         return question;
     }
 
-    @Mapping(source = "user", target = "userId")
+    @Mapping(source = "user", target = "name")
     QuestionDto.PatchResponse questionToQuestionPatchResponseDto(Question question);
 
-    @Mapping(source = "user", target = "userId")
+    @Mapping(source = "user", target = "name")
     QuestionDto.Response questionToQuestionResponseDto(Question question);
 
     default List<QuestionDto.Response> questionsToQuestionResponseDtos(List<Question> questions) {

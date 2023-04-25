@@ -48,12 +48,12 @@ public class QuestionDto {
     @NoArgsConstructor
     public static class PatchResponse {
         private Long questionId;
-        private Long userId;
+        private String name;
         private String title;
         private String content;
         private LocalDateTime modifiedAt;
-        public void setUserId(User user) {
-            this.userId = user.getUserId();
+        public void setName(User user) {
+            this.name = user.getName();
         }
     }
 
@@ -62,7 +62,7 @@ public class QuestionDto {
     @NoArgsConstructor
     public static class Response {
         private Long questionId;
-        private Long userId;
+        private String name;
         private String title;
         private String content;
         private LocalDateTime createdAt;
@@ -71,8 +71,8 @@ public class QuestionDto {
         private Integer scoreCount;
         private List<AnswerDto.Response> answers;
 
-        public void setUserId(User user) {
-            this.userId = user.getUserId();
+        public void setName(User user) {
+            this.name = user.getName();
         }
 
         public void setAnswers(List<Answer> answers) {

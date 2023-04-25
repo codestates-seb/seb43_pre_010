@@ -195,7 +195,7 @@ public class QuestionController {
 
     // 특정 질문의 싫어요 버튼을 누른 경우
     @PostMapping("/{question-id}/dislike")
-    public ResponseEntity postUnlikeToQuestion(@PathVariable("question-id") @Positive long questionId,
+    public ResponseEntity postDislikeToQuestion(@PathVariable("question-id") @Positive long questionId,
                                            @Valid @RequestBody QuestionLikeDto.Post post) {
         post.setQuestionId(questionId);
 

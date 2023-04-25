@@ -16,21 +16,18 @@ import java.util.Optional;
 @Transactional
 public class QuestionLikeService {
     private final QuestionLikeRepository repository;
-//    private final UserService userService;
+    private final UserService userService;
     private final QuestionService questionService;
 
-    public QuestionLikeService(QuestionLikeRepository repository, QuestionService questionService) { //, UserService userService) {
+    public QuestionLikeService(QuestionLikeRepository repository, QuestionService questionService, UserService userService) {
         this.repository = repository;
-//        this.userService = userService;
+        this.userService = userService;
         this.questionService = questionService;
     }
 
     public QuestionLike pressQuestionLike(QuestionLike requestedQuestionLike) {
 //        User verifiedUser = userService.findVerifiedUser(requestedQuestionLike.getUser().getUserId());
 //        Question verifiedQuestion = questionService.findVerifiedQuestion(requestedQuestionLike.getQuestion().getQuestionId());
-//
-//        // 좋아요. 싫어요 투표가 가능한지 확인
-//        checkVotePossibility(verifiedUser, verifiedQuestion);
 //
 //        // 특정 user, 특정 question과 관련된 QuestionLike가 처음 생성되는 건지 확인
 //        Optional<QuestionLike> optionalQuestionLike = checkQuestionLikeFirst(verifiedUser, verifiedQuestion);
@@ -71,13 +68,6 @@ public class QuestionLikeService {
 //            }
 //        }
         return new QuestionLike();
-    }
-
-    // 투표하려는 사람이 질문 작성자 본인이라면 할 수 없음
-    private void checkVotePossibility(User user, Question question) {
-        if (user.getUserId() == question.getUser().getUserId()) {
-            throw new BusinessLogicException(ExceptionCode.CANNOT_VOTE_QUESTIONLIKE);
-        }
     }
 
     private Optional<QuestionLike> checkQuestionLikeFirst(User user, Question question) {

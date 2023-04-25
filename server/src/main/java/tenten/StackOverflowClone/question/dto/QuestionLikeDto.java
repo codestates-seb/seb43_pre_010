@@ -29,14 +29,14 @@ public class QuestionLikeDto {
     public static class Response {
         private Long questionLikeId;
 
-        private Long userId;
+        private String name;
 
         private Long questionId;
 
         private Boolean like;
 
-        public void setUserId(User user) {
-            this.userId = user.getUserId();
+        public void setName(User user) {
+            this.name = user.getName();
         }
 
         public void setQuestionId(Question question) {

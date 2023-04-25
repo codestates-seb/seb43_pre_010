@@ -4,12 +4,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.exception.BusinessLogicException;
 import tenten.StackOverflowClone.exception.ExceptionCode;
 import tenten.StackOverflowClone.question.entity.Question;
 import tenten.StackOverflowClone.question.repository.QuestionRepository;
+import tenten.StackOverflowClone.user.entity.User;
+import tenten.StackOverflowClone.user.service.UserService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,14 +22,14 @@ import java.util.Optional;
 @Transactional
 public class QuestionService {
     private final QuestionRepository repository;
-//    private final UserService userService;
+    private final UserService userService;
 
     @PersistenceContext
     EntityManager entityManager;
 
-    public QuestionService(QuestionRepository repository) { // , UserService userService) {
+    public QuestionService(QuestionRepository repository, UserService userService) {
         this.repository = repository;
-//        this.userService = userService;
+        this.userService = userService;
     }
 
     public Question createQuestion(Question question) {
@@ -72,6 +73,7 @@ public class QuestionService {
         // 비우지 않으면, 영속성 컨텍스트에 남아있던 이전 쿼리의 결과들이 같이 보내짐
         // 즉, 특정 기준값에 부합하지 않는 질문들을 같이 보내옴
         entityManager.clear();
+
         Pageable pageable = PageRequest.of(page, size, Sort.by("questionId").descending());
 
         switch (condition.toLowerCase()) {
@@ -79,6 +81,8 @@ public class QuestionService {
                 return repository.findByUserIdFromRecently(Long.parseLong(value), pageable);
             case "exact phrase":
                 return repository.findByExactPhrase(value, pageable);
+            case "answer":
+                return repository.findByAnswerCount(Integer.parseInt(value), pageable);
             default:
                 throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
         }
@@ -101,7 +105,8 @@ public class QuestionService {
         }
     }
 
-    public void deleteQuestion(long questionId, User user) {
+    public void deleteQuestion(long questionId,
+                               org.springframework.security.core.userdetails.User user) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
         // 삭제가 가능한지 확인
@@ -134,7 +139,7 @@ public class QuestionService {
     // 질문 작성 시 검증 -> 질문한 사용자가 존재하는지 확인
     private void verifyQuestionPost(Question question) {
 //        User user = userService.findVerifiedUser(question.getUser().getUserId());
-
+//
 //        question.setUser(user);
     }
 
@@ -177,7 +182,7 @@ public class QuestionService {
     }
 
     private void checkDeletePossibility(Question question,
-                                        User user) {
+                                        org.springframework.security.core.userdetails.User user) {
         // 1. 질문이 이미 삭제 상태인지 확인
         if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_DELETE) {
             // 410 Gone
