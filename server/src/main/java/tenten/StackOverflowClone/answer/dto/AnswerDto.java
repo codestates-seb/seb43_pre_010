@@ -3,6 +3,7 @@ package tenten.StackOverflowClone.answer.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 public class AnswerDto {
@@ -13,7 +14,7 @@ public class AnswerDto {
         private long questionId;
         private long userId;
 
-        @NotEmpty(message = "질문 내용을 작성해주세요")
+        @NotBlank(message = "질문 내용을 작성해주세요")
         private String content;
 
         public void addQuestionId(long questionId){
@@ -30,7 +31,7 @@ public class AnswerDto {
     public static class Patch{
         private long answerId;
 
-        @NotEmpty(message = "질문 내용을 작성해주세요")
+        @NotBlank(message = "질문 내용을 작성해주세요")
         private String content;
 
         public void setAnswerId(long answerId) {
@@ -45,6 +46,7 @@ public class AnswerDto {
         private long questionId;
         private long userId;
         private String content;
+        // username은 추후 userId로 부터 가져온다.
         private String username;
         private Integer scoreCount;
 

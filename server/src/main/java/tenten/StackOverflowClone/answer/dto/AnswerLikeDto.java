@@ -3,7 +3,7 @@ package tenten.StackOverflowClone.answer.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class LikeDto {
+public class AnswerLikeDto {
 
     @Getter
     @Setter
