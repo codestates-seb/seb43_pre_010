@@ -54,7 +54,7 @@ public class AnswerService {
     // QuestionId로 Answer의 검색이 불가능하다
     public List<Answer> findAnswers(long questionId){
 
-        return answerRepository.findByQuestion_QuestionId(questionId);
+        return answerRepository.findByQuestion_QuestionIdAndAnswerStatus(questionId, Answer.AnswerStatus.ANSWER_REGISTRATION);
 
     }
 

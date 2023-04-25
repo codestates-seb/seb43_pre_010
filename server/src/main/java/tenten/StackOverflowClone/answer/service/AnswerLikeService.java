@@ -1,7 +1,7 @@
 package tenten.StackOverflowClone.answer.service;
 
 import org.springframework.stereotype.Service;
-import tenten.StackOverflowClone.answer.entity.Likes;
+import tenten.StackOverflowClone.answer.entity.AnswerLike;
 import tenten.StackOverflowClone.answer.repository.AnswerLikeRepository;
 
 import java.util.Optional;
@@ -15,9 +15,9 @@ public class AnswerLikeService {
         this.answerLikeRepository = answerLikeRepository;
     }
 
-    public void updateLike(Likes like){
+    public void updateLike(AnswerLike like){
         // userId, answerId로 조회한다.
-        Optional<Likes> findLikes = answerLikeRepository.findByUser_UserIdAndAnswer_AnswerId(like.getUser().getUserId(), like.getAnswer().getAnswerId());
+        Optional<AnswerLike> findLikes = answerLikeRepository.findByUser_UserIdAndAnswer_AnswerId(like.getUser().getUserId(), like.getAnswer().getAnswerId());
 
         // 1. 좋아요 컬럼이 없을 경우 추가
         if(!(findLikes.isPresent())){

@@ -18,4 +18,8 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     // 제목 또는 내용에 특정 문구를 포함하고 있는 질문 조회
     @Query(value = "select q from Question q where q.title like %:phrase% or q.content like %:phrase%")
     Page<Question> findByExactPhrase(@Param("phrase") String phrase, Pageable pageable);
+
+    // 답변 개수가 검색값 이하인 질문 조회
+    @Query(value = "select q from Question q where q.answers.size <= :phrase")
+    Page<Question> findByAnswerCount(@Param("phrase") Integer answerCount, Pageable pagealbe);
 }

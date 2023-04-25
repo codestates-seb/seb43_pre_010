@@ -11,13 +11,13 @@ public enum ExceptionCode {
     */
 
     USER_NOT_FOUND(404, "User not found"),
+    DELETED_USER(404, "Deleted User"),
     USER_EXIST(409, "User exist"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(403, "Question cannot change"),
     CANNOT_READ_QUESTION(403, "Question cannot be read"),
     CANNOT_DELETE_QUESTION(403, "Question cannot be deleted"),
     ALREADY_DELETED_QUESTION(410, "Question is already deleted"),
-    CANNOT_VOTE_QUESTIONLIKE(403, "QuestionLike cannot be voted"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     ANSWER_NOT_FOUND(404, "Answer not found"),
     SAME_LIKE_EXIST(409, "Same Status Like Exist");

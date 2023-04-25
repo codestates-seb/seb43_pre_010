@@ -39,7 +39,6 @@ public class Question extends Auditable {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    // ** 영속성 전이 설정 -> 부모 Question을 영속화할 때, 자식 Answer도 같이 영속화함
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
