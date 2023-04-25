@@ -5,7 +5,7 @@ import MenuButton from "./MenuButton";
 import SearchModal from "./SearchModal";
 import Avatar from "../Avatar";
 import Button from "../Button";
-import { AchievementsSvg, CommunitySvg, GlassesSvg, HelpSvg, MailSvg, MessageSvg, SOIconSvg, SOLogoSvg } from "../../../assets/Header/HeaderSVG";
+import { GlassesSvg } from "../../../assets/Header/HeaderSVG";
 
 const HeaderBar = () => {
 
