@@ -11,6 +11,7 @@ public enum ExceptionCode {
     */
 
     USER_NOT_FOUND(404, "User not found"),
+    DELETED_USER(404, "Deleted User"),
     USER_EXIST(409, "User exist"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(403, "Question cannot change"),
