@@ -26,7 +26,7 @@ const HeaderBar = () => {
     if (token) {
       setIsLogIn(true);
     }
-  }, []);
+  }, [token]);
 
   const handleMenuBtnClick = () => {
     setIsSelected(!isSelected);

@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
-      
+
       const formData = {
         email,
         password,
@@ -41,7 +41,7 @@ const LoginForm = () => {
         return;
       }
 
-      setCookie('jwt', accessToken, { path: '/', domain: 'localhost', expires: new Date(expiredTimestamp) });
+      setCookie('jwt', accessToken, { path: '/', expires: new Date(expiredTimestamp) });
       
       if (cookies) {
         navigate("/");
