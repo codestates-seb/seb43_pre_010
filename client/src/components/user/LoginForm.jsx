@@ -61,8 +61,7 @@ const LoginForm = () => {
 export default LoginForm;
 
 const LoginFormWrapper = styled.section`
-  width: "278px";
-  height: calc(100vh - 100px);
+  width: 278px;
   font-size: 12px;
 
   .iconLogoGlyphMd {
