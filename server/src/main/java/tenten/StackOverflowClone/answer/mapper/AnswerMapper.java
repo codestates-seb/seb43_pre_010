@@ -28,9 +28,6 @@ public interface AnswerMapper {
     @Mapping(source = "user.userId", target = "userId")
     AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
-    // static으로 선언 -> 수동으로 구현
-    //List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers);
-
     static List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers){
         return answers.stream()
                 .map(answer -> new AnswerDto.Response(

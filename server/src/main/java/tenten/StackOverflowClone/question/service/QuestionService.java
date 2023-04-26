@@ -15,7 +15,6 @@ import tenten.StackOverflowClone.user.service.UserService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -138,9 +137,9 @@ public class QuestionService {
 
     // 질문 작성 시 검증 -> 질문한 사용자가 존재하는지 확인
     private void verifyQuestionPost(Question question) {
-//        User user = userService.findVerifiedUser(question.getUser().getUserId());
-//
-//        question.setUser(user);
+        User user = userService.findVerifiedUser(question.getUser().getUserId());
+
+        question.setUser(user);
     }
 
     // 질문 객체를 DB에 저장하는 메서드
@@ -158,8 +157,8 @@ public class QuestionService {
 
     private void checkUpdatePossibility(Question changedQuestion, Question originalQuestion) {
         // 1. 회원이 수정하려는 건지 확인 -> getEmail()에서 NPE를 막기 위함
-//        User verifiedUser = userService.findVerifiedUser(changedQuestion.getUser().getUserId());
-//        changedQuestion.setUser(verifiedUser);
+        User verifiedUser = userService.findVerifiedUser(changedQuestion.getUser().getUserId());
+        changedQuestion.setUser(verifiedUser);
 
         // 2. 질문을 등록한 사용자가 or 관리자가 수정하는게 맞는지 확인
         if (changedQuestion.getUser().getUserId() != originalQuestion.getUser().getUserId()) {
