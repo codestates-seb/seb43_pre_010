@@ -1,4 +1,10 @@
+/* eslint-disable no-alert */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "../common/Button";
 import { SOLogoSvg } from "../../assets/Header/HeaderSVG";
@@ -8,13 +14,45 @@ import AccountHelpText from "./AccountHelpText";
 
 const LoginForm = () => {
 
+  const navigate = useNavigate();
+
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
 
-  console.log(email, password);
+  const [ cookies, setCookie ] = useCookies(['jwt']);
 
-  const handleSubmit = () => {
-    console.log("서버에 요청");
+  const handleSubmit = async () => {
+    try {
+
+      const formData = {
+        email,
+        password,
+      };
+
+      const response = await axios.post("http://localhost:8000/auth/login", {
+        email : formData.email,
+        password : formData.password,
+      });
+
+      const { accessToken, expiredTimestamp } = response.data;
+
+      if (!accessToken) {
+        console.log("로그인 실패");
+        return;
+      }
+
+      setCookie('jwt', accessToken, { path: '/', expires: new Date(expiredTimestamp) });
+      
+      if (cookies) {
+        navigate("/");
+      }
+
+    } catch (err) {
+      alert("일치하는 회원정보가 없습니다.");
+      setEmail("");
+      setPassword("");
+      console.log(err);
+    }
   };
 
   return (
@@ -61,8 +99,7 @@ const LoginForm = () => {
 export default LoginForm;
 
 const LoginFormWrapper = styled.section`
-  width: "278px";
-  height: calc(100vh - 100px);
+  width: 278px;
   font-size: 12px;
 
   .iconLogoGlyphMd {

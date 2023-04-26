@@ -5,6 +5,7 @@ import LeftNav from '../components/common/LeftNav';
 import MainHeader from '../components/main/MainHeader';
 import MainContent from '../components/main/MainContent';
 import HeaderBar from '../components/common/header/HeaderBar';
+import Footer from '../components/common/footer/Footer';
 
 const HomePage = () => {
   const [questions, setQuestions] = useState(null);
@@ -22,6 +23,7 @@ const HomePage = () => {
     return <div>Loading...</div>;
   }
   return (
+    <>
     <MainContainer>
       <HeaderBar />
       <LeftNav />
@@ -30,12 +32,15 @@ const HomePage = () => {
         <MainContent questions={questions} />
       </HomeContainer>
     </MainContainer>
+    <Footer />
+    </>
   );
 };
 
 const MainContainer = styled.div`
   position: relative;
   max-width: 1264px;
+  min-height: 600px;
   width: 100%;
   display: flex;
   justify-content: space-between;

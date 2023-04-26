@@ -1,12 +1,16 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Avatar = () => {
+
+  const name = useSelector((state) => state.auth.name);
+
   return (
     <UserProfileWrapper>
-      <UserProfile>H</UserProfile>
+      <UserProfile>{name}</UserProfile>
     </UserProfileWrapper>
-  )
-}
+  );
+};
 
 export default Avatar;
 
