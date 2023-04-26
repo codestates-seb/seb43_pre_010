@@ -75,6 +75,14 @@ const SearchHintModal = styled.div`
   transform: matrix(1, 0, 0, 1, 0, 42.5);
   z-index: 5;
   top: 1px;
+  @media screen and (max-width: 1000px) {
+    left: -120px;
+    width: 500px;
+  }
+  @media screen and (max-width: 650px) {
+    left: -120px;
+    width: 500px;
+  }
 
   .search-hint-text {
     box-sizing: border-box;

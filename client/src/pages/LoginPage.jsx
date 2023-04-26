@@ -28,8 +28,8 @@ export const LoginPageWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   background-attachment: scroll;
-  height: "calc(100vh - 50px)";
-  min-height: "600px";
+  height: calc(100vh - 50px);
+  min-height: 600px;
 `;
 
 export const LoginContent = styled.div`

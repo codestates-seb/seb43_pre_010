@@ -1,6 +1,9 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-shadow */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
+import axios from "axios";
 import Button from "../common/Button";
 import AccountHelpText from "./AccountHelpText";
 import EmployerHelpText from "./EmployerHelpText";
@@ -9,6 +12,8 @@ import PrivacyImg from "../../assets/Login/PrivacyImg.png";
 import SocialForm from "./SocialForm";
 
 const SignUpForm = () => {
+
+  const navigate = useNavigate();
 
   const [ name, setName ] = useState("");
   const [ email, setEmail ] = useState("");
@@ -31,10 +36,34 @@ const SignUpForm = () => {
     }
   };
 
-  console.log(name, email, password);
+  const handleSubmit = async () => {
+    try {
+      console.log("서버에 요청");
+      const formData = {
+        email,
+        password,
+        name,
+      };
 
-  const handleSubmit = () => {
-    console.log("서버에 요청");
+      const response = await axios.post("http://localhost:8000/auth/signup", {
+        email : formData.email,
+        password : formData.password,
+        name : formData.name,
+      });
+
+      console.log(">>>>>", response.data);
+      const { accessToken, expiredTimestamp } = response.data;
+
+      if (!accessToken) {
+        console.log("로그인 실패");
+        return;
+      }
+      alert("회원가입이 완료되었습니다.");
+      navigate("/auth/login");
+
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return(

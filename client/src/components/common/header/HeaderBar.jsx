@@ -1,20 +1,44 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { logout } from '../../../slices/authSlice';
 import MenuButton from "./MenuButton";
 import SearchModal from "./SearchModal";
 import Avatar from "../Avatar";
 import Button from "../Button";
-import { AchievementsSvg, CommunitySvg, GlassesSvg, HelpSvg, MailSvg, MessageSvg, SOIconSvg, SOLogoSvg } from "../../../assets/Header/HeaderSVG";
+import { GlassesSvg } from "../../../assets/Header/HeaderSVG";
 
 const HeaderBar = () => {
 
+  const [ isLogIn, setIsLogIn ] = useState(false);
   const [ isSelected, setIsSelected ] = useState(false);
   const [ isOpenedHint, setIsOpenedHint ] = useState(false);
-  const User = null;
+  const [ cookies, removeCookie ] = useCookies(['jwt']);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const token = cookies.jwt;
+
+  useEffect(() => {
+    if (token) {
+      setIsLogIn(true);
+    }
+  }, [token]);
 
   const handleMenuBtnClick = () => {
     setIsSelected(!isSelected);
+  }
+
+  const handleLogOut = () => {
+    dispatch(logout());
+    removeCookie("jwt", token, { expires: new Date(0)});
+    setIsLogIn(false);
+
+    navigate("/");
+    window.location.reload();
   }
 
   return (
@@ -22,9 +46,9 @@ const HeaderBar = () => {
       <nav className="navbar">
         <MenuButton onClick={handleMenuBtnClick} isSelected={isSelected} />
         <Link to='/' className="nav-items nav-logo"><HeaberLogo/></Link>
-        <Link to='/' className="nav-items nav-btn">About</Link>
-        <Link to='/' className="nav-items nav-btn">Products</Link>
-        <Link to='/' className="nav-items nav-btn">For Teams</Link>
+        <Link to='/' className="nav-items nav-btn hide-item">About</Link>
+        <Link to='/' className="nav-items nav-btn min-item">Products</Link>
+        <Link to='/' className="nav-items nav-btn hide-item">For Teams</Link>
         <form>
           <input type="text" placeholder="Search..." onClick={() => setIsOpenedHint(true)} onBlur={() => setIsOpenedHint(false)}/>
           <GlassesSvg />
@@ -33,16 +57,20 @@ const HeaderBar = () => {
             : null
           }
         </form>
-        { User === null ?
-        <>
-        <Link to='/auth/login' className="nav-items nav-links">Log in</Link> 
-        <Link to='/auth/signup' className="nav-items nav-links sign-btn">Sign up</Link>
-        </>
+        { isLogIn ?
+          <Link to='/' className="islogin-items">
+            <Avatar>M</Avatar>
+            <Button 
+              type="logout"
+              text="Log out"
+              onClick={handleLogOut}
+            />
+          </Link>
         :
-        <Link to='/' className="">
-          <Avatar>M</Avatar>
-          <Button>Log out</Button>
-        </Link>
+        <>
+          <Link to='/auth/login' className="nav-items nav-links">Log in</Link> 
+          <Link to='/auth/signup' className="nav-items nav-links sign-btn">Sign up</Link>
+        </>
       }
       </nav>
     </HeaderWrapper>
@@ -59,6 +87,9 @@ const HeaberLogo = styled.div`
   display: inline-block;
   text-align: -9999em;
   margin-top: 5px;
+  @media screen and (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const HeaderWrapper = styled.header`
@@ -80,6 +111,15 @@ const HeaderWrapper = styled.header`
   .nav-logo {
     padding: 0 calc(8px * 1);
     height: 47px;
+    @media screen and (max-width: 650px) {
+      display: none;
+    }
+  }
+
+  .min-item {
+    @media screen and (max-width: 650px) {
+      font-size: 11px !important;
+    }
   }
 
   .nav-items {
@@ -104,6 +144,18 @@ const HeaderWrapper = styled.header`
     width: 97.2307692rem;
     max-width: 65%;
     margin: 0 auto;
+    @media screen and (max-width: 1400px) {
+      max-width: 90%;
+    }
+    @media screen and (max-width: 650px) {
+      max-width: 100%;
+    }
+  }
+
+  .hide-item {
+    @media screen and (max-width: 950px) {
+      display: none;
+    }
   }
 
   .nav-btn {
@@ -168,5 +220,10 @@ const HeaderWrapper = styled.header`
 
   .sign-btn:hover {
     background-color: hsl(206, 100%, 40%);
+  }
+
+  .islogin-items {
+    display: flex;
+    flex-direction: row;
   }
 `;
