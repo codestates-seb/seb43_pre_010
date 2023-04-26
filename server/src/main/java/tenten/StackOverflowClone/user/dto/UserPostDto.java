@@ -10,6 +10,8 @@ import javax.validation.constraints.Pattern;
 @Data
 @Getter
 public class UserPostDto {
+
+
     @NotBlank(message = "이름은 공백일 수 없습니다.")
     private String name;
 
