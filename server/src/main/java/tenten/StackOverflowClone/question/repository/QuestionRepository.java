@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tenten.StackOverflowClone.question.entity.Question;
 
-import java.util.List;
-
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     // JPQL - 엔티티 객체를 대상으로 질의하는 쿼리
     // 특정 질문자, 최신순으로 질문 조회
