@@ -19,6 +19,10 @@ const SignUpForm = () => {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
 
+  const nameRegex = /^[a-zA-Z0-9가-힣]{2,20}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
@@ -39,6 +43,20 @@ const SignUpForm = () => {
   const handleSubmit = async () => {
     try {
       console.log("서버에 요청");
+
+      if (!emailRegex.test(email)) {
+        alert("이메일 형식이 올바르지 않습니다.");
+        return;
+      }
+      if (!nameRegex.test(name)) {
+        alert("닉네임은 2~20자의 한글, 영문, 숫자만 사용 가능합니다.");
+        return;
+      }
+      if (!passwordRegex.test(password)) {
+        alert("비밀번호는 8자 이상, 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.");
+        return;
+      }
+
       const formData = {
         email,
         password,
@@ -51,8 +69,7 @@ const SignUpForm = () => {
         name : formData.name,
       });
 
-      console.log(">>>>>", response.data);
-      const { accessToken, expiredTimestamp } = response.data;
+      const { accessToken } = response.data;
 
       if (!accessToken) {
         console.log("로그인 실패");
@@ -62,6 +79,12 @@ const SignUpForm = () => {
       navigate("/auth/login");
 
     } catch (err) {
+      if (err.response && err.response.status === 409) {
+        alert("이미 존재하는 회원입니다.");
+        setEmail("");
+        setName("");
+        setPassword("");
+      }
       console.log(err);
     }
   };
