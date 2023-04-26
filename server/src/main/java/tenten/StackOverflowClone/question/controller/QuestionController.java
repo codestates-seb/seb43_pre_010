@@ -136,10 +136,8 @@ public class QuestionController {
     @PostMapping("/{question-id}/{answer-id}/like")
     public ResponseEntity likeAnswer(@PathVariable("answer-id") @Positive long answerId,
                                      @RequestBody AnswerLikeDto.Post requestBody){
-        // 질문 검증
+        // 질문 검증 FIXME: AnswerlikeService로 옮기는 것 고려
         Answer answer = answerService.findVerifiedAnswer(answerId);
-
-        // TODO: 회원 정보 검증 로직 추가
 
         // 회원 정보, 답변 정보를 받는다.
         AnswerLike like = answerLikeMapper.likeDtoToLikes(requestBody);
@@ -155,10 +153,8 @@ public class QuestionController {
     @PostMapping("/{question-id}/{answer-id}/dislike")
     public ResponseEntity dislikeAnswer(@PathVariable("answer-id") @Positive long answerId,
                                      @RequestBody AnswerLikeDto.Post requestBody){
-        // 질문 검증
+        // 질문 검증 FIXME: AnswerlikeService로 옮기는 것 고려
         Answer answer = answerService.findVerifiedAnswer(answerId);
-
-        // TODO: 회원 정보 검증 로직 추가
 
         // 회원 정보, 답변 정보를 받는다.
         AnswerLike like = answerLikeMapper.likeDtoToLikes(requestBody);

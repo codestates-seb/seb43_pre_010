@@ -35,14 +35,11 @@ public class AnswerController {
         this.answerLikeMapper = answerLikeMapper;
     }
 
-    // TODO: 추후 QuestionController로 이동
     @PostMapping("/{question-id}")
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive long questionId,
                                      @Valid @RequestBody AnswerDto.Post requestBody){
-        // client 에서 user 정보를 따로 받기
 
         requestBody.addQuestionId(questionId);
-        // requestBody.addUserId(userId);
 
         Answer answer = answerMapper.answerPostDtoToAnswer(requestBody);
         Answer createdAnswer = answerService.createAnswer(answer);

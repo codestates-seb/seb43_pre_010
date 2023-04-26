@@ -3,6 +3,7 @@ package tenten.StackOverflowClone.answer.service;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.answer.entity.AnswerLike;
 import tenten.StackOverflowClone.answer.repository.AnswerLikeRepository;
+import tenten.StackOverflowClone.user.service.UserService;
 
 import java.util.Optional;
 
@@ -10,12 +11,17 @@ import java.util.Optional;
 public class AnswerLikeService {
 
     private final AnswerLikeRepository answerLikeRepository;
+    private final UserService userService;
 
-    public AnswerLikeService(AnswerLikeRepository answerLikeRepository) {
+    public AnswerLikeService(AnswerLikeRepository answerLikeRepository, UserService userService) {
         this.answerLikeRepository = answerLikeRepository;
+        this.userService = userService;
     }
 
     public void updateLike(AnswerLike like){
+        // 회원 검증
+        userService.findVerifiedUser(like.getUser().getUserId());
+
         // userId, answerId로 조회한다.
         Optional<AnswerLike> findLikes = answerLikeRepository.findByUser_UserIdAndAnswer_AnswerId(like.getUser().getUserId(), like.getAnswer().getAnswerId());
 
