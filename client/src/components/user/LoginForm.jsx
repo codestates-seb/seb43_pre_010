@@ -6,6 +6,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { login } from '../../slices/authSlice';
 import Button from "../common/Button";
 import { SOLogoSvg } from "../../assets/Header/HeaderSVG";
 import SocialForm from "./SocialForm";
@@ -15,6 +16,7 @@ import AccountHelpText from "./AccountHelpText";
 const LoginForm = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
@@ -23,7 +25,6 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
-
       const formData = {
         email,
         password,
@@ -37,6 +38,7 @@ const LoginForm = () => {
       });
 
       const { accessToken, expiredTimestamp } = response.data;
+      const resUserData = response.data.body;
 
       if (!accessToken) {
         console.log("로그인 실패");
@@ -46,6 +48,14 @@ const LoginForm = () => {
       setCookie('jwt', accessToken, { path: '/', expires: new Date(expiredTimestamp) });
       
       if (cookies) {
+
+        dispatch(login({
+          userId: resUserData.userId,
+          email: resUserData.email,
+          name: resUserData.name,
+          isLogin: true,
+        }));
+
         navigate("/");
       }
 

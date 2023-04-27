@@ -65,7 +65,7 @@ const SignUpForm = () => {
 
       const URL = `http://ec2-43-201-77-252.ap-northeast-2.compute.amazonaws.com:8080`;
 
-      const response = await axios.post(`${URL}/auth/signup`, {
+      const response = await axios.post(`${URL}/users/auth/signup`, {
         email : formData.email,
         password : formData.password,
         name : formData.name,

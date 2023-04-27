@@ -55,6 +55,10 @@ const HomeContainer = styled.div`
   border-left: 1px solid hsl(210, 8%, 85%);
   margin: 0 auto;
   text-align: left;
+  @media screen and (max-width: 650px) {
+    margin-left: 0px;
+    width: 100%;
+  }
 `;
 
 export default HomePage;
