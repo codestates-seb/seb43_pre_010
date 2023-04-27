@@ -51,7 +51,6 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.PATCH, "/*/questions/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/*/questions/**").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/*/questions/**").permitAll()
-                        .anyRequest().authenticated()
                 );
 
         return http.build();
