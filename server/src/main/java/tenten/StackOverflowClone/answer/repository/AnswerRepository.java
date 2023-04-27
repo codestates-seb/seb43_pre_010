@@ -1,6 +1,7 @@
 package tenten.StackOverflowClone.answer.repository;
 
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tenten.StackOverflowClone.answer.entity.Answer;
 
@@ -11,6 +12,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     // @Query 애너테이션 사용시 네이밍 규칙이 적용되지 않음
     List<Answer> findByQuestion_QuestionIdAndAnswerStatus(long questionId, Answer.AnswerStatus answerStatus);
 
-
+    List<Answer> findByQuestion_QuestionIdAndAnswerStatus(long questionId, Answer.AnswerStatus answerStatus, Sort sort);
 
 }
