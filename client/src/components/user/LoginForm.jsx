@@ -29,7 +29,9 @@ const LoginForm = () => {
         password,
       };
 
-      const response = await axios.post("http://localhost:8000/auth/login", {
+      const URL = `http://ec2-43-201-77-252.ap-northeast-2.compute.amazonaws.com:8080`;
+
+      const response = await axios.post(`${URL}/auth/login`, {
         email : formData.email,
         password : formData.password,
       });
