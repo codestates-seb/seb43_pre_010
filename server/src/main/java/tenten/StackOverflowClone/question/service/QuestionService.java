@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.exception.BusinessLogicException;
 import tenten.StackOverflowClone.exception.ExceptionCode;
+import tenten.StackOverflowClone.oath.userDetails.UserDetails;
 import tenten.StackOverflowClone.question.entity.Question;
 import tenten.StackOverflowClone.question.repository.QuestionRepository;
 import tenten.StackOverflowClone.user.entity.User;
@@ -104,7 +105,7 @@ public class QuestionService {
         }
     }
 
-    public void deleteQuestion(long questionId) {
+public void deleteQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
         // 삭제가 가능한지 확인
@@ -179,7 +180,7 @@ public class QuestionService {
         }
     }
 
-    private void checkDeletePossibility(Question question) {
+private void checkDeletePossibility(Question question) {
         // 1. 질문이 이미 삭제 상태인지 확인
         if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_DELETE) {
             // 410 Gone
