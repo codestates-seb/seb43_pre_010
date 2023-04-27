@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getQuestion } from '../api/api';
+import { getHomeQuestion } from '../api/api';
 import LeftNav from '../components/common/LeftNav';
 import MainHeader from '../components/main/MainHeader';
 import MainContent from '../components/main/MainContent';
@@ -12,7 +12,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getQuestion(3);
+      const data = await getHomeQuestion();
       setQuestions(data);
     };
     fetchData();
@@ -24,15 +24,15 @@ const HomePage = () => {
   }
   return (
     <>
-    <MainContainer>
-      <HeaderBar />
-      <LeftNav />
-      <HomeContainer>
-        <MainHeader />
-        <MainContent questions={questions} />
-      </HomeContainer>
-    </MainContainer>
-    <Footer />
+      <MainContainer>
+        <HeaderBar />
+        <LeftNav />
+        <HomeContainer>
+          <MainHeader />
+          <MainContent questions={questions} />
+        </HomeContainer>
+      </MainContainer>
+      <Footer />
     </>
   );
 };
