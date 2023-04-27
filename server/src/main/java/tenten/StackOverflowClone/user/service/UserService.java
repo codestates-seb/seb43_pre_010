@@ -1,11 +1,16 @@
 package tenten.StackOverflowClone.user.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tenten.StackOverflowClone.exception.BusinessLogicException;
 import tenten.StackOverflowClone.exception.ExceptionCode;
+import tenten.StackOverflowClone.oath.utils.CustomAuthorityUtils;
 import tenten.StackOverflowClone.user.dto.UserResponseDto;
 import tenten.StackOverflowClone.user.entity.User;
 import tenten.StackOverflowClone.user.repository.UserRepository;
@@ -18,11 +23,16 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final ApplicationEventPublisher publisher;
     private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, ApplicationEventPublisher publisher,
+                       PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.userRepository = userRepository;
+        this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
 
     public User createUser(User user) {
@@ -31,13 +41,12 @@ public class UserService {
         //비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
         //userStatus 설정
         user.setUserStatus(User.UserStatus.USER_ACTIVE);
 
-//        List<String> roles = authori
         //회원가입
         userRepository.save(user);
-
 
         return user;
     }
@@ -78,6 +87,8 @@ public class UserService {
         return findUser;
     }
 
-//    public void aut
+    public Page<User> findUsers(int page) {
+        return userRepository.findAllWhoActive(PageRequest.of(page, 36, Sort.by("userId").descending()));
+    }
 
 }

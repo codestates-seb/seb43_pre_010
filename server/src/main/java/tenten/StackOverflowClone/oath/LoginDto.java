@@ -6,5 +6,5 @@ import lombok.Getter;
 public class LoginDto {
     private String userName;
 
-    private String pass;
+    private String password;
 }

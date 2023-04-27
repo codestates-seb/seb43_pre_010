@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class); //dto로 받아오기(엔트리포인트)
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getPass());
+                new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);  // authenticationManager에게 인증처리 위임
     }
@@ -52,6 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+        response.setHeader("Expiration", String.valueOf((jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes()).getTime())));
     }
 
     private String delegateAccessToken(User user) {
