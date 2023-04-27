@@ -15,6 +15,7 @@ import tenten.StackOverflowClone.answer.service.AnswerLikeService;
 import tenten.StackOverflowClone.answer.service.AnswerService;
 import tenten.StackOverflowClone.dto.MultiResponseDto;
 import tenten.StackOverflowClone.dto.SingleResponseDto;
+import tenten.StackOverflowClone.oath.userDetails.UserDetails;
 import tenten.StackOverflowClone.question.dto.QuestionDto;
 import tenten.StackOverflowClone.question.dto.QuestionLikeDto;
 import tenten.StackOverflowClone.question.entity.Question;
@@ -123,9 +124,8 @@ public class QuestionController {
         );
     }
 
-    // Spring security에서 디폴트로, UserDetailsService에서 return한 객체인 User를 매개변수로 받을 수도 있겠지만,
-    // TODO : 우리가 정의한 User를 상속 받은 Custom UserDetails를 파라미터로 받을 것
-    @DeleteMapping("/{question-id}")
+    // 우리가 정의한 User를 상속 받은 Custom UserDetails를 파라미터로 받음
+   @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId) {
         service.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

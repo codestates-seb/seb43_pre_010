@@ -1,5 +1,6 @@
 package tenten.StackOverflowClone.answer.service;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tenten.StackOverflowClone.answer.entity.Answer;
 import tenten.StackOverflowClone.answer.repository.AnswerRepository;
@@ -58,6 +59,21 @@ public class AnswerService {
 
         return answerRepository.findByQuestion_QuestionIdAndAnswerStatus(questionId, Answer.AnswerStatus.ANSWER_REGISTRATION);
 
+    }
+
+    // 최신순, 오래된 순으로 정렬
+    public List<Answer> findAnswersV2(long questionId, String sort){
+        switch (sort.toLowerCase()) {
+            case "newest":
+                return answerRepository.findByQuestion_QuestionIdAndAnswerStatus(questionId, Answer.AnswerStatus.ANSWER_REGISTRATION,
+                        Sort.by("answerId").descending());
+
+            case "oldest":
+                return answerRepository.findByQuestion_QuestionIdAndAnswerStatus(questionId, Answer.AnswerStatus.ANSWER_REGISTRATION,
+                        Sort.by("answerId").ascending());
+            default:
+                throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
+        }
     }
 
     // 컬럼을 삭제하지 않고 상태를 변경함

@@ -5,9 +5,15 @@ const Avatar = () => {
 
   const name = useSelector((state) => state.auth.name);
 
+  let displayName = '';
+  
+  if (name) {
+    displayName = name.slice(0, 1);
+  }
+
   return (
     <UserProfileWrapper>
-      <UserProfile>{name}</UserProfile>
+      <UserProfile>{displayName}</UserProfile>
     </UserProfileWrapper>
   );
 };
