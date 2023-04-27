@@ -20,13 +20,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
+    @Column(length = 100, nullable = false)
     private String name;
 
+    @Column(nullable = false, updatable = false, unique = true)
     private String email;
 
+    @Column(length = 100, nullable = false)
     private String password;
 
-    private String roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
