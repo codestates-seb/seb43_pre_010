@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { useSelector, useDispatch } from "react-redux";
-import { login, getUserInfo } from './slices/authSlice';
+import { useDispatch } from "react-redux";
+import { login } from './slices/authSlice';
 import Home from './pages/HomePage';
 import QuestionsPage from './pages/QuestionsPage';
 import QuestionAskPage from './pages/QuestionAskPage';
@@ -21,8 +21,10 @@ const App = () => {
     try  {
       const token = cookies.jwt;
       if (!token) return;
+
+      const URL = `http://ec2-43-201-77-252.ap-northeast-2.compute.amazonaws.com:8080`;
       
-      const response = await axios.get('http://localhost:8000/', {
+      const response = await axios.get(`${URL}/getUser`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }

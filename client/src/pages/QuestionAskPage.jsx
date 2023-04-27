@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import MDEditor from '@uiw/react-md-editor';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -6,8 +7,25 @@ import AskBackground from '../assets/AskBackground.svg';
 import HeaderBar from '../components/common/header/HeaderBar';
 
 const QuestionAskPage = () => {
-  const [value, setValue] = useState('');
+  const [content, setContent] = useState('');
   const { questionId } = useParams();
+  const [title, setTitle] = useState('');
+
+  const postAsk = () => {
+    axios
+      .post('http://ec2-43-201-77-252.ap-northeast-2.compute.amazonaws.com:8080/questions', {
+        // 로그인 중인 userId 값 redux에서 가져와서 넣어야 함
+        title,
+        content,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <AskBackGroundColor>
       <HeaderBar />
@@ -52,6 +70,8 @@ const QuestionAskPage = () => {
               id="title"
               type="text"
               maxLength={300}
+              value={title}
+              onChange={setTitle}
               placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
             />
           </div>
@@ -63,11 +83,11 @@ const QuestionAskPage = () => {
               Introduce the problem and expand on what you put in the title. Minimum 20 characters.
             </div>
             <div data-color-mode="light">
-              <MDEditor height={300} preview="edit" value={value} onChange={setValue} />
+              <MDEditor height={300} preview="edit" value={content} onChange={setContent} />
             </div>
           </div>
         </InputBox>
-        <AskButton>Ask Question</AskButton>
+        <AskButton onClick={postAsk}>Ask Question</AskButton>
       </AskPageContainer>
     </AskBackGroundColor>
   );

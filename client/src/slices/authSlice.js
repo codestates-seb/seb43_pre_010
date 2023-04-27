@@ -5,6 +5,7 @@ const initialState = {
   email: null,
   name: null,
   isLogin: false,
+  userId: null,
 };
 
 const authSlice = createSlice({
@@ -14,6 +15,7 @@ const authSlice = createSlice({
     login (state, action) {
       const incomeUserInfo = action.payload;
 
+      state.userId = incomeUserInfo.userId;
       state.email = incomeUserInfo.email;
       state.name = incomeUserInfo.name;
       state.isLogin = true;

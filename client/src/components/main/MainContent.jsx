@@ -1,29 +1,36 @@
 import styled from 'styled-components';
 
 const MainContent = ({ questions }) => {
-  console.log(questions);
+  const { data } = questions;
+  console.log(data);
+
+  function timeStampChange(time) {
+    return time.replace('T', ' ').substring(0, 19);
+  }
 
   return (
     <>
-      {questions.map((question) => (
-        <MainContentLayout>
+      {data.map((question) => (
+        <MainContentLayout key={question.questionId}>
           <QuestionSummary>
             <ul className="mr-4">
-              <li className="whitespace-nowrap text-right text-sm">{question.vote} votes</li>
+              <li className="whitespace-nowrap text-right text-sm">{question.scoreCount} votes</li>
               <li className="whitespace-nowrap text-right text-sm text-slate-700">
                 {question.answers.length} answer
               </li>
-              <li className="whitespace-nowrap text-right text-sm text-slate-700">25 views</li>
+              <li className="whitespace-nowrap text-right text-sm text-slate-700">
+                {question.viewCount} views
+              </li>
             </ul>
           </QuestionSummary>
           <QuestionTitle>
             <a href={`/questions/${question.questionId}`}> {question.title}</a>
             <div className="flex grow self-end items-end ">
               <div className="w-5 h-5 bg-lime-700 text-xs text-white text-center leading-5 rounded-sm">
-                H
+                {question.name.slice(0, 1)}
               </div>
-              <span className="text-sm mx-2">{question.user}</span>
-              <span className="text-xs ">asked 32 mins ago</span>
+              <span className="text-sm mx-2">{question.name}</span>
+              <span className="text-xs ">{timeStampChange(question.createdAt)}</span>
             </div>
           </QuestionTitle>
         </MainContentLayout>
