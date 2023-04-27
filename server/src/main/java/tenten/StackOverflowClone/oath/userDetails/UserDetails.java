@@ -1,12 +1,10 @@
 package tenten.StackOverflowClone.oath.userDetails;
 
-import tenten.StackOverflowClone.user.entity.User;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import tenten.StackOverflowClone.user.entity.User;
 
 import java.util.Collection;
 
-@Getter
 public class UserDetails extends User implements org.springframework.security.core.userdetails.UserDetails {
 
     public UserDetails(User user) {

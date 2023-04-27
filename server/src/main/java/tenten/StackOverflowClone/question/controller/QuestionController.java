@@ -42,9 +42,9 @@ public class QuestionController {
     private final AnswerService answerService;
     private final AnswerLikeMapper answerLikeMapper;
     private final AnswerLikeService answerLikeService;
-    
+
     public QuestionController(QuestionMapper mapper, QuestionService service, QuestionLikeMapper likeMapper, QuestionLikeService likeService,
-    AnswerService answerService, AnswerLikeMapper answerLikeMapper, AnswerLikeService answerLikeService){
+                              AnswerService answerService, AnswerLikeMapper answerLikeMapper, AnswerLikeService answerLikeService){
         this.mapper = mapper;
         this.service = service;
         this.likeMapper = likeMapper;
@@ -53,7 +53,7 @@ public class QuestionController {
         this.answerLikeMapper = answerLikeMapper;
         this.answerLikeService = answerLikeService;
     }
-    
+
 
     @PostMapping()
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post post) {
@@ -152,7 +152,7 @@ public class QuestionController {
 
     @PostMapping("/{question-id}/{answer-id}/dislike")
     public ResponseEntity dislikeAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                     @RequestBody AnswerLikeDto.Post requestBody){
+                                        @RequestBody AnswerLikeDto.Post requestBody){
         // 질문 검증 FIXME: AnswerlikeService로 옮기는 것 고려
         Answer answer = answerService.findVerifiedAnswer(answerId);
 
@@ -171,7 +171,7 @@ public class QuestionController {
     // 특정 질문의 좋아요 버튼을 누른 경우
     @PostMapping("/{question-id}/like")
     public ResponseEntity postLikeToQuestion(@PathVariable("question-id") @Positive long questionId,
-                                           @Valid @RequestBody QuestionLikeDto.Post post) {
+                                             @Valid @RequestBody QuestionLikeDto.Post post) {
         post.setQuestionId(questionId);
 
         QuestionLike questionLike = likeMapper.questionLikePostDtoToQuestionLike(post);
@@ -191,7 +191,7 @@ public class QuestionController {
     // 특정 질문의 싫어요 버튼을 누른 경우
     @PostMapping("/{question-id}/dislike")
     public ResponseEntity postDislikeToQuestion(@PathVariable("question-id") @Positive long questionId,
-                                           @Valid @RequestBody QuestionLikeDto.Post post) {
+                                                @Valid @RequestBody QuestionLikeDto.Post post) {
         post.setQuestionId(questionId);
 
         QuestionLike questionLike = likeMapper.questionLikePostDtoToQuestionLike(post);
