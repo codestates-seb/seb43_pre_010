@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import tenten.StackOverflowClone.oath.jwt.JwtAuthenticationFilter;
 import tenten.StackOverflowClone.oath.jwt.JwtTokenizer;
+import tenten.StackOverflowClone.oath.jwt.JwtVerificationFilter;
 
 
 @Configuration
@@ -40,9 +41,16 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.OPTIONS).permitAll()
-                        .antMatchers(HttpMethod.GET,"/auth/login").permitAll()
-                        .antMatchers(HttpMethod.POST,"/auth/signup").permitAll()
+                        .antMatchers(HttpMethod.GET,"/*/auth/login").permitAll()
+                        .antMatchers(HttpMethod.POST,"/*/auth/signup").permitAll()
                         .antMatchers(HttpMethod.PATCH).permitAll()
+                        .antMatchers(HttpMethod.POST, "/*/answers/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/*/answers/**").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/*/answers/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/*/questions/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/*/questions/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/*/questions/**").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/*/questions/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -55,11 +63,13 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer);
+
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
 
             builder
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtAuthenticationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
     @Bean

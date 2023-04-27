@@ -104,12 +104,11 @@ public class QuestionService {
         }
     }
 
-    public void deleteQuestion(long questionId,
-                               org.springframework.security.core.userdetails.User user) {
+    public void deleteQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
         // 삭제가 가능한지 확인
-        checkDeletePossibility(findQuestion, user);
+        checkDeletePossibility(findQuestion);
 
         findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_DELETE);
         saveQuestion(findQuestion);
@@ -180,23 +179,11 @@ public class QuestionService {
         }
     }
 
-    private void checkDeletePossibility(Question question,
-                                        org.springframework.security.core.userdetails.User user) {
+    private void checkDeletePossibility(Question question) {
         // 1. 질문이 이미 삭제 상태인지 확인
         if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_DELETE) {
             // 410 Gone
             throw new BusinessLogicException(ExceptionCode.ALREADY_DELETED_QUESTION);
-        }
-
-        // 2. 관리자가 삭제 시도를 한 거면 통과
-        if (user.getUsername().equals("admin@gmail.com")) {
-            return;
-        }
-
-        // 3. 질문자가 삭제 시도를 한 거면 통과 -> 아니면 예외 발생
-        // Spring Security User 객체의 Username == 우리가 정의한 User의 email
-        if (!question.getUser().getEmail().equals(user.getUsername())) {
-            throw new BusinessLogicException(ExceptionCode.CANNOT_DELETE_QUESTION);
         }
     }
 }
