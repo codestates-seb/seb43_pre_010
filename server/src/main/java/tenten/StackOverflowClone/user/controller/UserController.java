@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import tenten.StackOverflowClone.dto.SingleResponseDto;
 import tenten.StackOverflowClone.oath.userDetails.UserDetails;
 import tenten.StackOverflowClone.user.dto.UserPatchDto;
 import tenten.StackOverflowClone.user.dto.UserPostDto;
@@ -13,6 +14,7 @@ import tenten.StackOverflowClone.user.mapper.UserMapper;
 import tenten.StackOverflowClone.user.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/users")
@@ -49,8 +51,7 @@ public class UserController {
         userService.deleteUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
    }
-//   @GetMapping("/auth/login")
-//    public ResponseEntity getUser()
+
 }
 
 
