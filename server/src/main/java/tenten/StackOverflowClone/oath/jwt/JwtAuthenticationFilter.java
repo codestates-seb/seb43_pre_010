@@ -1,6 +1,7 @@
 package tenten.StackOverflowClone.oath.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,11 +9,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tenten.StackOverflowClone.oath.LoginDto;
+import tenten.StackOverflowClone.user.dto.UserDto;
 import tenten.StackOverflowClone.user.entity.User;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +48,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) {
+                                            Authentication authResult) throws IOException {
         User user = (User) authResult.getPrincipal(); // 인증 성공한 유저 객체 생성
+        UserDto userDto = new UserDto(user.getUserId(), user.getEmail(), user.getName());
+        Gson gson = new Gson();
+        String json = gson.toJson(userDto);
+
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(user);
@@ -53,6 +61,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("Expiration", String.valueOf((jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes()).getTime())));
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(json);
+        out.flush();
+        out.close();
+
     }
 
     private String delegateAccessToken(User user) {
