@@ -2,9 +2,10 @@ package tenten.StackOverflowClone.answer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+import tenten.StackOverflowClone.user.entity.User;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 public class AnswerDto {
 
@@ -41,14 +42,17 @@ public class AnswerDto {
 
     @AllArgsConstructor
     @Getter
+    @Setter
     public static class Response{
         private long answerId;
         private long questionId;
         private long userId;
         private String content;
-        // username은 추후 userId로 부터 가져온다.
         private String username;
         private Integer scoreCount;
 
+        public void setName(User user) {
+            this.username = user.getName();
+        }
     }
 }
