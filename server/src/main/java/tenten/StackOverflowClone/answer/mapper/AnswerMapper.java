@@ -26,6 +26,7 @@ public interface AnswerMapper {
     // Answer 엔티티 클래스의 User와 연결된 User 엔티티 클래스의 userId와 AnswerDto.Response의 userId를 매핑한다는 의미다.
     @Mapping(source = "question.questionId", target = "questionId")
     @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "user.name", target = "username")
     AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
     static List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers){
