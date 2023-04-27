@@ -9,6 +9,7 @@ import SearchModal from "./SearchModal";
 import Avatar from "../Avatar";
 import Button from "../Button";
 import { GlassesSvg } from "../../../assets/Header/HeaderSVG";
+import ModalNav from "./ModalNav";
 
 const HeaderBar = () => {
 
@@ -45,6 +46,10 @@ const HeaderBar = () => {
     <HeaderWrapper>
       <nav className="navbar">
         <MenuButton onClick={handleMenuBtnClick} isSelected={isSelected} />
+        {
+          isSelected ? <ModalNav />
+          : null
+        }
         <Link to='/' className="nav-items nav-logo"><HeaberLogo/></Link>
         <Link to='/' className="nav-items nav-btn hide-item">About</Link>
         <Link to='/' className="nav-items nav-btn min-item">Products</Link>
