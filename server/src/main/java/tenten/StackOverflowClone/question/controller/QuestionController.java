@@ -125,10 +125,9 @@ public class QuestionController {
     }
 
     // 우리가 정의한 User를 상속 받은 Custom UserDetails를 파라미터로 받음
-    @DeleteMapping("/{question-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId,
-                                         @AuthenticationPrincipal UserDetails user) {
-        service.deleteQuestion(questionId, user);
+   @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId) {
+        service.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
