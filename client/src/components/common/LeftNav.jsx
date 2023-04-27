@@ -32,7 +32,7 @@ const LeftNavLayout = styled.nav`
   max-height: calc(100vh - 50px);
   flex-shrink: 0;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 650px) {
     display: none;
   }
 `;

@@ -48,6 +48,9 @@ const AboutSignUpTextContainer = styled.div`
     color: rgb(0, 116, 204);
     cursor: pointer;
   }
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const AboutSignUpTextContent = styled.div`
