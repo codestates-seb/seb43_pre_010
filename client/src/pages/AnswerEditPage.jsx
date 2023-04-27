@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import MDEditor from '@uiw/react-md-editor';
 import ReactMarkdown from 'react-markdown';
@@ -7,33 +7,7 @@ import HeaderBar from '../components/common/header/HeaderBar';
 
 const AnswerEditPage = () => {
   const [value, setValue] = useState('');
-  const initialValue = `Try this:
-\`\`\`javascript
-cy.window().then(win => {
-  cy.get('svg')
-    .trigger('mousedown', {
-      which: 1,
-      force: true,
-      view: win,
-    })
-    .trigger('mousemove', {
-      clientX: 300,
-      clientY: 500,
-      force: true,
-    })
-    .trigger('mouseup', {
-      force: true,
-      view: win,
-    });
-});
-\`\`\`
 
-Referencing [Jennifer Shehane's answer in this GitHub issue][1], the answer to the \`cannot read property document of undefined\` part is to plug the window object into \`view\` in the trigger options. The issue mentioned in jacefarm's answer, where no movement occurred, seems to be resolved by specifying \`clientX\`/\`clientY\` rather than using positions relative to the selected element.
-`;
-
-  useEffect(() => {
-    setValue(initialValue);
-  }, []);
   return (
     <EditContainer>
       <HeaderBar className="pt-6" />

@@ -31,6 +31,10 @@ const LeftNavLayout = styled.nav`
   top: 50px;
   max-height: calc(100vh - 50px);
   flex-shrink: 0;
+
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 export default LeftNav;
